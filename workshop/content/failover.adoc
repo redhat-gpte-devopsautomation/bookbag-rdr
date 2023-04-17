@@ -32,7 +32,7 @@ image:images/rhacm-data-policies.png[images/rhacm-data-policies.png]
 . Click on the 3 dots on the *drsync5m* disaster recovery policy and select *Apply DRPolicy*.
 image:images/rhacm-apply-dr-policy.png[imagesrhacm-apply-dr-policy.png]
 +
-. On the *Apply DRPolicy* popup, select the *globex* application and under *PVC label* enter *app=globex*.  These options allow the globex application to be included in the DR policy and preserves any PVC's with a label matching *app=globex*.  Click *Apply*.
+. On the *Apply DRPolicy* popup, select the *globex* application and under *PVC label* enter *app=globex*.  These options allow the globex application to be included in the DR policy and preserves any PVC's with a label matching *app=globex*, in our case the PVC associated with the postgres database containing our prices.  Click *Apply*.
 +
 image:images/rhacm-save-dr-policy.png[images/rhacm-save-dr-policy.png]
 +
