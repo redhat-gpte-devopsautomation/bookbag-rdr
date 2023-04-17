@@ -3,7 +3,7 @@
 :openshift_cluster_admin_username: %openshift_cluster_admin_username%,
 :openshift_cluster_admin_password: %openshift_cluster_admin_password%,
 
-=== Failover
+=== Failover Application To Secondary
 
 [arabic]
 . Open a terminal, login to the primary cluster %api_url% with your credentials username: %openshift_cluster_admin_username% and password: %openshift_cluster_admin_password%.

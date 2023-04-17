@@ -4,10 +4,10 @@ modules:
     name: Overview
     exit_sign: Continue
   create_application:
-    name: Creating the application
+    name: Create Application On Primary
     exit_sign: Continue
   failover:
-    name: Fail over the application
+    name: Create Application To Secondary
     exit_sign: Continue
   review:
     name: Review

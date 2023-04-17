@@ -3,7 +3,7 @@
 :openshift_cluster_admin_username: %openshift_cluster_admin_username%,
 :openshift_cluster_admin_password: %openshift_cluster_admin_password%,
 
-=== Create Application
+=== Create Application On Primary
 
 [arabic]
 . Go to the %openshift_cluster_console_url%/[OpenShift
