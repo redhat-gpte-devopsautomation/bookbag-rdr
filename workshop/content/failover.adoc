@@ -13,7 +13,7 @@
 oc login -u %openshift_cluster_admin_username% -p %openshift_cluster_admin_password% https://api.cluster-x9sc5-2.sandbox2623.opentlc.com:6443
 ----
 +
-. You are now going to make an update to the price of one of the globex store items.  We are making this change to ensure that data is preserved, through PVC preservation, when a failover is initiated.  Update the price by running the below commands:
+. You are now going to make an update to the price of one of the globex store items.  This data is stored in a postgres database linked to a PVC which we will preserve during the failover.  Update the price by running the below commands:
 +
 [source, bash]
 ----
