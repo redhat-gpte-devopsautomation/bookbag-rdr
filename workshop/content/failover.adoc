@@ -64,7 +64,7 @@ image:images/rhacm-failover-application.png[images/rhacm-failover-application.pn
 +
 NOTE: The subscription group may not be in a ready state to select.  Wait a few minutes and try again.
 .. Click *Initiate*
-. You will notice that the pods on the primary cluster in the *globex* namespace will start terminating as the app gets deleted.
+. You will notice that the pods on the primary cluster in the *globex* namespace will start terminating as the app starts failing over.
 +
 image:images/primary-pods-terminated.png[images/primary-pods-terminated.png]
 +
