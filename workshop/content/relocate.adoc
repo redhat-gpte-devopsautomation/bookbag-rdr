@@ -6,56 +6,28 @@
 === Relocate Application To Primary
 
 [arabic]
-. You will now attempt to relocate/failback the application to the primary cluster.  . Switch back to the RHACM console and select *Applications* and filter on *Subscription*.  Click the 3 dots at the end of the *globex* application and select *Relocate application*.
+. You will now attempt to relocate/failback the application to the primary cluster.  Before we do that, we want to ensure that any changes made on the secondary cluster are preserved when relocating back to the primary cluster. Open a terminal, login to the secondary cluster %api_url% with your credentials username: %openshift_cluster_admin_username% and password: %openshift_cluster_admin_password%.
 +
-image:images/rhacm-relocate-menu.png[images/rhacm-relocate-menu.png]
+[source, bash]
+----
+oc login -u %openshift_cluster_admin_username% -p %openshift_cluster_admin_password% https://api.cluster-x9sc5-2.sandbox2623.opentlc.com
+----
 +
-. Provide the following details on the popup:
-.. *Select policy*: drsync5m
-.. *Target cluster*: primary
-.. *Select subscriptions group*: globex-subscription-1
-+
-image:images/rhacm-failover-application.png[images/rhacm-relocate-application.png]
+. You are again going to make an update to the price of the Quarkus T-shirt.  Update the price by running the below commands:
 +
 [source, bash]
 ----
 POD=$(oc get pods -n globex | grep catalog-database | awk '{print $1}')
-oc exec -it pod/$POD -n globex -- psql --dbname catalog --command "update catalog set price = 15 where name = 'Quarkus T-shirt';"
+oc exec -it pod/$POD -n globex -- psql --dbname catalog --command "update catalog set price = 20 where name = 'Quarkus T-shirt';"
 ----
 +
-. Switch back to the Globex application and refresh the page.  Select the last page (6) and notice that the price of the Quarkust T-shirt is now *$15.00*
+. Confirm if the price has updated to by switching back to the Globex application on the secondary cluster and refresh the page.  Select the last page (6) and notice that the price of the Quarkust T-shirt is now *$20.00*
 +
-image:images/primary-globex-item-updated.png[images/primary-globex-item-updated.png]
+image:images/secondary-price-updated.png[images/secondary-price-updated.png]
 +
-. Return to the RHACM console and then click *Data Services->Data policies* from the left menu.
+. Go back to the RHACM console and select *Applications* and filter on *Subscription*.  Click the 3 dots at the end of the *globex* application and select *Relocate application*.
 +
-image:images/rhacm-data-policies.png[images/rhacm-data-policies.png]
-+
-. Click on the 3 dots on the *drsync5m* disaster recovery policy and select *Apply DRPolicy*.
-image:images/rhacm-apply-dr-policy.png[imagesrhacm-apply-dr-policy.png]
-+
-. On the *Apply DRPolicy* popup, select the *globex* application and under *PVC label* enter *app=globex*.  These options allow the globex application to be included in the DR policy and preserves any PVC's with a label matching *app=globex*, in our case the PVC associated with the postgres database containing our prices.  Click *Apply*.
-+
-image:images/rhacm-save-dr-policy.png[images/rhacm-save-dr-policy.png]
-+
-. Open a terminal, login to the secondary cluster %api_url% with your credentials username: %openshift_cluster_admin_username% and password: %openshift_cluster_admin_password%.
-+
-[source, bash]
-----
-oc login -u %openshift_cluster_admin_username% -p %openshift_cluster_admin_password% https://api.cluster-x9sc5-2.sandbox2623.opentlc.com:6443
-----
-+
-. You will now need to create the *globex* namespace in the secondary cluster and annotate it with the globex subscription name.
-+
-[source, bash]
-----
-oc new-project globex || oc project globex
-oc annotate ns globex --overwrite=true apps.open-cluster-management.io/hosting-subscription=globex/globex-subscription-1
-----
-+
-. Switch back to the RHACM console and select *Applications* and filter on *Subscription*.  Click the 3 dots at the end of the *globex* application and select *Failover application*.
-+
-image:images/rhacm-failover-menu.png[images/rhacm-failover-menu.png]
+image:images/rhacm-relocate-menu.png[images/rhacm-relocate-menu.png]
 +
 . Provide the following details on the popup:
 .. *Select policy*: drsync5m
@@ -82,6 +54,6 @@ image:images/primary-globex-route.png[images/primary-globex-route.png]
 +
 image:images/primary-globex-landing.png[images/primary-globex-landing.png]
 +
-. Select the last page (6) and notice that the price of the Quarkust T-shirt is still *$15.00*.
+. Select the last page (6) and notice that the price of the Quarkust T-shirt is still *$20.00*.
 +
-image:images/secondary-price-preserved.png[images/secondary-price-preserved.png]
+image:images/secondary-price-updated.png[images/secondary-price-updated.png]
