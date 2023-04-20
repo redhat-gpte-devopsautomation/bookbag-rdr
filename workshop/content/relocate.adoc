@@ -31,7 +31,7 @@ image:images/rhacm-relocate-menu.png[images/rhacm-relocate-menu.png]
 +
 . Provide the following details on the popup:
 .. *Select policy*: drsync5m
-.. *Target cluster*: secondary
+.. *Target cluster*: primary
 .. *Select subscriptions group*: globex-subscription-1
 +
 image:images/rhacm-relocate-application.png[images/rhacm-relocate-application.png]
