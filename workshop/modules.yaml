@@ -7,7 +7,10 @@ modules:
     name: Create Application On Primary
     exit_sign: Continue
   failover:
-    name: Create Application To Secondary
+    name: Failover Application To Secondary
+    exit_sign: Continue
+  relocate:
+    name: Relocate Application To Primary
     exit_sign: Continue
   review:
     name: Review
