@@ -12,8 +12,9 @@
 
 == Overview
 
-You can access environment variables as flattened `{}`-surrounded variables in these templated AsciiDoc files.
 
+You can access environment variables as flattened `{}`-surrounded variables in these templated AsciiDoc files.
+test {primary_cluster_api_url}
 === Variables from ENV as AsciiDoc attributes
 
 NOTE: JSON objects are flattened and joined with a `.`.
