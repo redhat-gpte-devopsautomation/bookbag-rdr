@@ -38,7 +38,7 @@ image:images/rhacm-relocate-application.png[images/rhacm-relocate-application.pn
 +
 NOTE: The subscription group may not be in a ready state to select.  Wait a few minutes and try again.
 .. Click *Initiate*
-. You will notice that the pods on the secondary cluster in the *globex* namespace will start terminating as the app starts relocate back to the primary cluster.
+. You will notice that the pods on the secondary cluster in the *globex* namespace will start terminating as the app starts relocating back to the primary cluster.
 +
 image:images/secondary-pods-terminated.png[images/secondary-pods-terminated.png]
 +
