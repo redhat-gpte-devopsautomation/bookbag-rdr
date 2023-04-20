@@ -1,16 +1,42 @@
-:guid: %guid%,
-:openshift_cluster_console_url: %openshift_cluster_console_url%,
-:openshift_cluster_admin_username: %openshift_cluster_admin_username%,
-:openshift_cluster_admin_password: %openshift_cluster_admin_password%,
+:hub_openshift_api_server_url: %hub_openshift_api_server_url%
+:hub_openshift_cluster_console_url: %hub_openshift_cluster_console_url%
+:hub_openshift_cluster_admin_username: %hub_openshift_cluster_admin_username%
+:hub_openshift_cluster_admin_password: %hub_openshift_cluster_admin_password%
+:hub_gitea_console_url: %hub_gitea_console_url%
+:hub_gitea_admin_username: %hub_gitea_admin_username%
+:hub_gitea_admin_password: %hub_gitea_admin_password%
+:hub_bastion_public_hostname: %hub_bastion_public_hostname%
+:hub_bastion_ssh_password: %hub_bastion_ssh_password%
+:hub_bastion_ssh_user_name: %hub_bastion_ssh_user_name%
+:hub_ssh_command: %hub_ssh_command%
+
+:primary_openshift_api_server_url: %primary_openshift_api_server_url%
+
+:primary_openshift_cluster_console_url: %primary_openshift_cluster_console_url%
+:primary_openshift_cluster_admin_username: %primary_openshift_cluster_admin_username%
+:primary_openshift_cluster_admin_password: %primary_openshift_cluster_admin_password%
+:primary_bastion_public_hostname: %primary_bastion_public_hostname%
+:primary_bastion_ssh_password: %primary_bastion_ssh_password%
+:primary_bastion_ssh_user_name: %primary_bastion_ssh_user_name%
+:primary_ssh_command: %primary_ssh_command%
+
+:secondary_openshift_api_server_url: %secondary_openshift_api_server_url%
+:secondary_openshift_cluster_console_url: %secondary_openshift_cluster_console_url%
+:secondary_openshift_cluster_admin_username: %secondary_openshift_cluster_admin_username%
+:secondary_openshift_cluster_admin_password: %secondary_openshift_cluster_admin_password%
+:secondary_bastion_public_hostname: %secondary_bastion_public_hostname%
+:secondary_bastion_ssh_user_name: %secondary_bastion_ssh_user_name%
+:secondary_bastion_ssh_password: %secondary_bastion_ssh_password
+:secondary_ssh_command: %secondary_ssh_command%
 
 === Relocate Application To Primary
 
 [arabic]
-. You will now attempt to relocate/failback the application to the primary cluster.  Before we do that, we want to ensure that any changes made on the secondary cluster are preserved when relocating back to the primary cluster. Open a terminal, login to the secondary cluster %api_url% with your credentials username: %openshift_cluster_admin_username% and password: %openshift_cluster_admin_password%.
+. You will now attempt to relocate/failback the application to the primary cluster.  Before we do that, we want to ensure that any changes made on the secondary cluster are preserved when relocating back to the primary cluster. Open a terminal, login to the secondary cluster %api_url% with your credentials username: {hub_openshift_cluster_admin_username} and password: {hub_openshift_cluster_admin_password}.
 +
 [source, bash]
 ----
-oc login -u %openshift_cluster_admin_username% -p %openshift_cluster_admin_password% https://api.cluster-x9sc5-2.sandbox2623.opentlc.com
+oc login -u {hub_openshift_cluster_admin_username} -p {hub_openshift_cluster_admin_password} https://api.cluster-x9sc5-2.sandbox2623.opentlc.com
 ----
 +
 . You are again going to make an update to the price of the Quarkus T-shirt.  Update the price by running the below commands:

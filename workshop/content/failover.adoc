@@ -1,16 +1,42 @@
-:guid: %guid%,
-:openshift_cluster_console_url: %openshift_cluster_console_url%,
-:openshift_cluster_admin_username: %openshift_cluster_admin_username%,
-:openshift_cluster_admin_password: %openshift_cluster_admin_password%,
+:hub_openshift_api_server_url: %hub_openshift_api_server_url%
+:hub_openshift_cluster_console_url: %hub_openshift_cluster_console_url%
+:hub_openshift_cluster_admin_username: %hub_openshift_cluster_admin_username%
+:hub_openshift_cluster_admin_password: %hub_openshift_cluster_admin_password%
+:hub_gitea_console_url: %hub_gitea_console_url%
+:hub_gitea_admin_username: %hub_gitea_admin_username%
+:hub_gitea_admin_password: %hub_gitea_admin_password%
+:hub_bastion_public_hostname: %hub_bastion_public_hostname%
+:hub_bastion_ssh_password: %hub_bastion_ssh_password%
+:hub_bastion_ssh_user_name: %hub_bastion_ssh_user_name%
+:hub_ssh_command: %hub_ssh_command%
+
+:primary_openshift_api_server_url: %primary_openshift_api_server_url%
+
+:primary_openshift_cluster_console_url: %primary_openshift_cluster_console_url%
+:primary_openshift_cluster_admin_username: %primary_openshift_cluster_admin_username%
+:primary_openshift_cluster_admin_password: %primary_openshift_cluster_admin_password%
+:primary_bastion_public_hostname: %primary_bastion_public_hostname%
+:primary_bastion_ssh_password: %primary_bastion_ssh_password%
+:primary_bastion_ssh_user_name: %primary_bastion_ssh_user_name%
+:primary_ssh_command: %primary_ssh_command%
+
+:secondary_openshift_api_server_url: %secondary_openshift_api_server_url%
+:secondary_openshift_cluster_console_url: %secondary_openshift_cluster_console_url%
+:secondary_openshift_cluster_admin_username: %secondary_openshift_cluster_admin_username%
+:secondary_openshift_cluster_admin_password: %secondary_openshift_cluster_admin_password%
+:secondary_bastion_public_hostname: %secondary_bastion_public_hostname%
+:secondary_bastion_ssh_user_name: %secondary_bastion_ssh_user_name%
+:secondary_bastion_ssh_password: %secondary_bastion_ssh_password
+:secondary_ssh_command: %secondary_ssh_command%
 
 === Failover Application To Secondary
 
 [arabic]
-. Open a terminal, login to the primary cluster %api_url% with your credentials username: %openshift_cluster_admin_username% and password: %openshift_cluster_admin_password%.
+. Open a terminal, login to the primary cluster %api_url% with your credentials username: {hub_openshift_cluster_admin_username} and password: {hub_openshift_cluster_admin_password}.
 +
 [source, bash]
 ----
-oc login -u %openshift_cluster_admin_username% -p %openshift_cluster_admin_password% https://api.cluster-x9sc5-2.sandbox2623.opentlc.com:6443
+oc login -u {hub_openshift_cluster_admin_username} -p {hub_openshift_cluster_admin_password} https://api.cluster-x9sc5-2.sandbox2623.opentlc.com:6443
 ----
 +
 . You are now going to make an update to the price of one of the globex store items.  This data is stored in a postgres database attached to a PVC which we will preserve during the failover.  Update the price by running the below commands:
@@ -36,11 +62,11 @@ image:images/rhacm-apply-dr-policy.png[imagesrhacm-apply-dr-policy.png]
 +
 image:images/rhacm-save-dr-policy.png[images/rhacm-save-dr-policy.png]
 +
-. Open a terminal, login to the secondary cluster %api_url% with your credentials username: %openshift_cluster_admin_username% and password: %openshift_cluster_admin_password%.
+. Open a terminal, login to the secondary cluster %api_url% with your credentials username: {hub_openshift_cluster_admin_username} and password: {hub_openshift_cluster_admin_password}.
 +
 [source, bash]
 ----
-oc login -u %openshift_cluster_admin_username% -p %openshift_cluster_admin_password% https://api.cluster-x9sc5-2.sandbox2623.opentlc.com:6443
+oc login -u {hub_openshift_cluster_admin_username} -p {hub_openshift_cluster_admin_password} https://api.cluster-x9sc5-2.sandbox2623.opentlc.com:6443
 ----
 +
 . You will now need to create the *globex* namespace in the secondary cluster and annotate it with the globex subscription name.
@@ -68,8 +94,8 @@ NOTE: The subscription group may not be in a ready state to select.  Wait a few 
 +
 image:images/primary-pods-terminated.png[images/primary-pods-terminated.png]
 +
-. Open another browser window and login to the *secondary* cluster %openshift_cluster_console_url%/[OpenShift
-console] and log in with your credentials username: %openshift_cluster_admin_username% and password: %openshift_cluster_admin_password%.
+. Open another browser window and login to the *secondary* cluster {hub_openshift_cluster_console_url}/[OpenShift
+console] and log in with your credentials username: {hub_openshift_cluster_admin_username} and password: {hub_openshift_cluster_admin_password}.
 +
 image:images/openshift-login.png[images/openshift-login.png]
 +
