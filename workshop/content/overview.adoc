@@ -36,6 +36,7 @@ Welcome to Achieve business continuity with Red Hat OpenShift Container Platform
 Organizations running critical applications on Red Hat OpenShift Container Platform need a business continuity plan for site and regional disasters that goes beyond cluster failover or backup and recovery. Its implementation should provide data resiliency and take into account the application continuous deployment practices as a part of the overall enterprise GitOps strategies.
 
 We'll discuss:
+
 * Disaster recovery and business continuity strategies and demonstrate how to use Red Hat OpenShift disaster recovery features to implement service availability at predefined acceptable levels following a disruptive incident. 
 * How to failover an application requiring data persistence using Advanced Cluster Manager and Red Hat OpenShift Data Foundation.
 * Disaster recovery impact on the application continuous deployment with ArgoCD.
@@ -52,15 +53,16 @@ In this workshop, you will learn how to achieve Business Continuity for your app
 === Lab Access
 
 The lab consists of three Red Hat OpenShift Clusters.
-1. Hub Cluster 
-2. Primary Cluster
-3. Secondary Cluster
+
+*1. Hub Cluster 
+*2. Primary Cluster
+*3. Secondary Cluster
 
 You can access your Hub environment bastion server as {hub_bastion_ssh_user_name} with password {hub_bastion_ssh_password} with the following command:
 
 [source,bash,options="nowrap",subs="{markup-in-source}"]
 ----
-ssh {%hub_ssh_command}
+ssh {hub_ssh_command}
 ----
 
 === Workshop Information
@@ -70,32 +72,32 @@ Informational messages generated for your workshop and can be used to access the
 [source,bash,options="nowrap"]
 ----
 Hub Cluster Information :
-Hub Cluster API URL : {hub_openshift_api_server_url}
-Hub Cluster Cluster Console URL : {hub_openshift_cluster_console_url}
-Hub Cluster admin : {hub_openshift_cluster_admin_username:}
-Hub Cluster admin password : {hub_openshift_cluster_admin_password}
-Hub Cluster bastion host : {hub_bastion_public_hostname}
-Hub Cluster bastion ssh password : {hub_bastion_ssh_password}
-Hub Cluster bastion ssh username : {hub_bastion_ssh_user_name}
-Hub Cluster ssh command information : {hub_ssh_command}
+Hub Cluster API URL - {hub_openshift_api_server_url}
+Hub Cluster Cluster Console URL - {hub_openshift_cluster_console_url}
+Hub Cluster admin - {hub_openshift_cluster_admin_username:}
+Hub Cluster admin password - {hub_openshift_cluster_admin_password}
+Hub Cluster bastion host - {hub_bastion_public_hostname}
+Hub Cluster bastion ssh password - {hub_bastion_ssh_password}
+Hub Cluster bastion ssh username - {hub_bastion_ssh_user_name}
+Hub Cluster ssh command information - {hub_ssh_command}
 
 Primary Cluster Information :
-Primary Cluster API URL : {primary_openshift_api_server_url}
-Primary Cluster Cluster Console URL : {primary_openshift_cluster_console_url}
-Primary Cluster admin : {primary_openshift_cluster_admin_username}
-Primary Cluster admin password : {primary_openshift_cluster_admin_password}
-Primary Cluster bastion host : {primary_bastion_public_hostname}
-Primary Cluster bastion ssh password : {primary_bastion_ssh_password}
-Primary Cluster bastion ssh username : {primary_bastion_ssh_user_name}
-Primary Cluster ssh command information : {primary_ssh_command}
+Primary Cluster API URL - {primary_openshift_api_server_url}
+Primary Cluster Cluster Console URL - {primary_openshift_cluster_console_url}
+Primary Cluster admin - {primary_openshift_cluster_admin_username}
+Primary Cluster admin password - {primary_openshift_cluster_admin_password}
+Primary Cluster bastion host - {primary_bastion_public_hostname}
+Primary Cluster bastion ssh password - {primary_bastion_ssh_password}
+Primary Cluster bastion ssh username - {primary_bastion_ssh_user_name}
+Primary Cluster ssh command information - {primary_ssh_command}
 
 Secondary Cluster Information :
-Secondary Cluster API URL : {secondary_openshift_api_server_url}
-Secondary Cluster Cluster Console URL : {secondary_openshift_cluster_console_url}
-Secondary Cluster admin : {secondary_openshift_cluster_admin_username}
-Secondary Cluster admin password : {secondary_openshift_cluster_admin_password}
-Secondary Cluster bastion host : {secondary_bastion_public_hostname}
-Secondary Cluster bastion ssh password : {secondary_bastion_ssh_user_name}
-Secondary Cluster bastion ssh username : {secondary_bastion_ssh_password}
-Secondary Cluster ssh command information : {secondary_ssh_command}
+Secondary Cluster API URL - {secondary_openshift_api_server_url}
+Secondary Cluster Cluster Console URL - {secondary_openshift_cluster_console_url}
+Secondary Cluster admin - {secondary_openshift_cluster_admin_username}
+Secondary Cluster admin password - {secondary_openshift_cluster_admin_password}
+Secondary Cluster bastion host - {secondary_bastion_public_hostname}
+Secondary Cluster bastion ssh password - {secondary_bastion_ssh_user_name}
+Secondary Cluster bastion ssh username - {secondary_bastion_ssh_password}
+Secondary Cluster ssh command information - {secondary_ssh_command}
 ----
