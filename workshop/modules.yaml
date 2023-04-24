@@ -3,6 +3,9 @@ modules:
   overview:
     name: Overview
     exit_sign: Continue
+  understand:
+    name: Understand the Implementation
+    exit_sign: Continue
   create_application:
     name: Create Application On Primary
     exit_sign: Continue
@@ -11,6 +14,9 @@ modules:
     exit_sign: Continue
   relocate:
     name: Relocate Application To Primary
+    exit_sign: Continue
+  fix:
+    name: Fix a Sample Application for Disaster Recovery
     exit_sign: Continue
   review:
     name: Review

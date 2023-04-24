@@ -31,70 +31,71 @@
 
 
 == Overview
+Welcome to Achieve business continuity with Red Hat OpenShift Container Platform.
 
+Organizations running critical applications on Red Hat OpenShift Container Platform need a business continuity plan for site and regional disasters that goes beyond cluster failover or backup and recovery. Its implementation should provide data resiliency and take into account the application continuous deployment practices as a part of the overall enterprise GitOps strategies.
 
-You can access environment variables as flattened `{}`-surrounded variables in these templated AsciiDoc files.
+We'll discuss:
+* Disaster recovery and business continuity strategies and demonstrate how to use Red Hat OpenShift disaster recovery features to implement service availability at predefined acceptable levels following a disruptive incident. 
+* How to failover an application requiring data persistence using Advanced Cluster Manager and Red Hat OpenShift Data Foundation.
+* Disaster recovery impact on the application continuous deployment with ArgoCD.
+* Best practices.
 
-=== Variables from ENV as AsciiDoc attributes
-
-NOTE: JSON objects are flattened and joined with a `.`.
-As a side-effect of the `.`, any character will match the `.` in the variable name.
-
-.Example: All of these function
-----
-:hub_openshift_api_server_url: %hub_openshift_api_server_url%
-:hub_openshift_cluster_console_url: %hub_openshift_cluster_console_url%
-:hub_openshift_cluster_admin_username: %hub_openshift_cluster_admin_username%
-:hub_openshift_cluster_admin_password: %hub_openshift_cluster_admin_password%
-:hub_gitea_console_url: %hub_gitea_console_url%
-:hub_gitea_admin_username: %hub_gitea_admin_username%
-:hub_gitea_admin_password: %hub_gitea_admin_password%
-:hub_bastion_public_hostname: %hub_bastion_public_hostname%
-:hub_bastion_ssh_password: %hub_bastion_ssh_password%
-:hub_bastion_ssh_user_name: %hub_bastion_ssh_user_name%
-:hub_ssh_command: %hub_ssh_command%
-
-:primary_openshift_api_server_url: %primary_openshift_api_server_url%
-
-:primary_openshift_cluster_console_url: %primary_openshift_cluster_console_url%
-:primary_openshift_cluster_admin_username: %primary_openshift_cluster_admin_username%
-:primary_openshift_cluster_admin_password: %primary_openshift_cluster_admin_password%
-:primary_bastion_public_hostname: %primary_bastion_public_hostname%
-:primary_bastion_ssh_password: %primary_bastion_ssh_password%
-:primary_bastion_ssh_user_name: %primary_bastion_ssh_user_name%
-:primary_ssh_command: %primary_ssh_command%
-
-:secondary_openshift_api_server_url: %secondary_openshift_api_server_url%
-:secondary_openshift_cluster_console_url: %secondary_openshift_cluster_console_url%
-:secondary_openshift_cluster_admin_username: %secondary_openshift_cluster_admin_username%
-:secondary_openshift_cluster_admin_password: %secondary_openshift_cluster_admin_password%
-:secondary_bastion_public_hostname: %secondary_bastion_public_hostname%
-:secondary_bastion_ssh_user_name: %secondary_bastion_ssh_user_name%
-:secondary_bastion_ssh_password: %secondary_bastion_ssh_password
-:secondary_ssh_command: %secondary_ssh_command%
-----
+In the hands on lab participant will understand the nuances of how to setup an application to continue working during disaster recovery. We will use a real life application called Globex for a fictitios e-commerce company selling goods online. Deploy and setup application for business continuity. 
+We test by updating the data and demonstrate the failover and relocate ensure that the persistent data is consistent and available.
+Finally we troubleshoot and fix a small sample application to be part of Disaster Recovery strategy and test failover/relocate.
 
 == Intro
 
-In this workshop, you will learn and explor Red Hat OpenShift Data Science using a real life AI/ML based edge use case.
-The following content is an example of what to include in an overview.
+In this workshop, you will learn how to achieve Business Continuity for your applications hosted on Red Hat OpenShift platform. We will understand some of the implementation aspects of disaster recovery on Red Hat OpenShift Platform. Persistent storage requirement is key to many application and to achieve disaster recovery for such applications, data replication becomes very important. In this lab we will leverage Red Hat OpenShift Data Foundations Storage.
 
 === Lab Access
 
-You can access your lab environment as lab-user with password %ssh_password% with the following command:
+The lab consists of three Red Hat OpenShift Clusters.
+1. Hub Cluster 
+2. Primary Cluster
+3. Secondary Cluster
+
+You can access your Hub environment bastion server as {hub_bastion_ssh_user_name} with password {hub_bastion_ssh_password} with the following command:
 
 [source,bash,options="nowrap",subs="{markup-in-source}"]
 ----
-%hub_ssh_command%
+ssh {%hub_ssh_command}
 ----
-
-Your lab GUID is "%guid%".
 
 === Workshop Information
 
-Informational messages generated for your workshop:
+Informational messages generated for your workshop and can be used to access the Cluster's :
 
 [source,bash,options="nowrap"]
 ----
-%user_info_messages%
+Hub Cluster Information :
+Hub Cluster API URL : {hub_openshift_api_server_url}
+Hub Cluster Cluster Console URL : {hub_openshift_cluster_console_url}
+Hub Cluster admin : {hub_openshift_cluster_admin_username:}
+Hub Cluster admin password : {hub_openshift_cluster_admin_password}
+Hub Cluster bastion host : {hub_bastion_public_hostname}
+Hub Cluster bastion ssh password : {hub_bastion_ssh_password}
+Hub Cluster bastion ssh username : {hub_bastion_ssh_user_name}
+Hub Cluster ssh command information : {hub_ssh_command}
+
+Primary Cluster Information :
+Primary Cluster API URL : {primary_openshift_api_server_url}
+Primary Cluster Cluster Console URL : {primary_openshift_cluster_console_url}
+Primary Cluster admin : {primary_openshift_cluster_admin_username}
+Primary Cluster admin password : {primary_openshift_cluster_admin_password}
+Primary Cluster bastion host : {primary_bastion_public_hostname}
+Primary Cluster bastion ssh password : {primary_bastion_ssh_password}
+Primary Cluster bastion ssh username : {primary_bastion_ssh_user_name}
+Primary Cluster ssh command information : {primary_ssh_command}
+
+Secondary Cluster Information :
+Secondary Cluster API URL : {secondary_openshift_api_server_url}
+Secondary Cluster Cluster Console URL : {secondary_openshift_cluster_console_url}
+Secondary Cluster admin : {secondary_openshift_cluster_admin_username}
+Secondary Cluster admin password : {secondary_openshift_cluster_admin_password}
+Secondary Cluster bastion host : {secondary_bastion_public_hostname}
+Secondary Cluster bastion ssh password : {secondary_bastion_ssh_user_name}
+Secondary Cluster bastion ssh username : {secondary_bastion_ssh_password}
+Secondary Cluster ssh command information : {secondary_ssh_command}
 ----
