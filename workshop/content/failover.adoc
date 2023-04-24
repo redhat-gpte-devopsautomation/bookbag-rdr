@@ -11,7 +11,6 @@
 :hub_ssh_command: %hub_ssh_command%
 
 :primary_openshift_api_server_url: %primary_openshift_api_server_url%
-
 :primary_openshift_cluster_console_url: %primary_openshift_cluster_console_url%
 :primary_openshift_cluster_admin_username: %primary_openshift_cluster_admin_username%
 :primary_openshift_cluster_admin_password: %primary_openshift_cluster_admin_password%
@@ -32,9 +31,9 @@
 === Failover Application To Secondary
 
 [arabic]
-. Open a terminal, login to the primary cluster %api_url% with your credentials username: {hub_openshift_cluster_admin_username} and password: {hub_openshift_cluster_admin_password}.
+. Open a terminal, login to the primary cluster {primary_openshift_api_server_url} with your credentials username: {primary_openshift_cluster_admin_username} and password: {primary_openshift_cluster_admin_password}.
 +
-oc login -u {hub_openshift_cluster_admin_username} -p {hub_openshift_cluster_admin_password} {hub_openshift_api_server_url}
+oc login -u {primary_openshift_cluster_admin_username} -p {primary_openshift_cluster_admin_password} {primary_openshift_api_server_url}
 +
 . You are now going to make an update to the price of one of the globex store items.  This data is stored in a postgres database attached to a PVC which we will preserve during the failover.  Update the price by running the below commands:
 +
