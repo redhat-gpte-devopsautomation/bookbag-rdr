@@ -60,10 +60,7 @@ The lab consists of three Red Hat OpenShift Clusters.
 
 You can access your Hub environment bastion server as {hub_bastion_ssh_user_name} with password {hub_bastion_ssh_password} with the following command:
 
-[source,bash,options="nowrap"]
-----
 ssh {hub_ssh_command}
-----
 
 === Workshop Information
 
