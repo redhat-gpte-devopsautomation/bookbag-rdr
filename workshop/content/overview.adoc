@@ -59,14 +59,13 @@ The lab consists of three Red Hat OpenShift Clusters.
 * Secondary Cluster
 
 You can access your Hub environment bastion server as {hub_bastion_ssh_user_name} with password {hub_bastion_ssh_password} with the following command:
-----
+
 ssh {hub_bastion_ssh_user_name}@{hub_bastion_public_hostname}
-----
 
 === Workshop Information
 
 Informational messages generated for your workshop and can be used to access the Cluster's :
-----
+
 Hub Cluster Information :
 Hub Cluster API URL - {hub_openshift_api_server_url}
 Hub Cluster Cluster Console URL - {hub_openshift_cluster_console_url}
@@ -96,4 +95,4 @@ Secondary Cluster bastion host - {secondary_bastion_public_hostname}
 Secondary Cluster bastion ssh password - {secondary_bastion_ssh_user_name}
 Secondary Cluster bastion ssh username - {secondary_bastion_ssh_password}
 Secondary Cluster ssh command information - {secondary_ssh_command}
-----
+
