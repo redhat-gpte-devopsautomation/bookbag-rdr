@@ -36,7 +36,7 @@
 +
 [source, bash]
 ----
-oc login -u {hub_openshift_cluster_admin_username} -p {hub_openshift_cluster_admin_password} https://api.cluster-x9sc5-2.sandbox2623.opentlc.com:6443
+oc login -u {hub_openshift_cluster_admin_username} -p {hub_openshift_cluster_admin_password} {hub_openshift_api_server_url}
 ----
 +
 . You are now going to make an update to the price of one of the globex store items.  This data is stored in a postgres database attached to a PVC which we will preserve during the failover.  Update the price by running the below commands:

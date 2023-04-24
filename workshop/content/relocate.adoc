@@ -32,11 +32,11 @@
 === Relocate Application To Primary
 
 [arabic]
-. You will now attempt to relocate/failback the application to the primary cluster.  Before we do that, we want to ensure that any changes made on the secondary cluster are preserved when relocating back to the primary cluster. Open a terminal, login to the secondary cluster %api_url% with your credentials username: {hub_openshift_cluster_admin_username} and password: {hub_openshift_cluster_admin_password}.
+. You will now attempt to relocate/failback the application to the primary cluster.  Before we do that, we want to ensure that any changes made on the secondary cluster are preserved when relocating back to the primary cluster. Open a terminal, login to the secondary cluster {secondary_openshift_api_server_url} with your credentials username: {secondary_openshift_cluster_admin_username} and password: {secondary_openshift_cluster_admin_password}.
 +
 [source, bash]
 ----
-oc login -u {hub_openshift_cluster_admin_username} -p {hub_openshift_cluster_admin_password} https://api.cluster-x9sc5-2.sandbox2623.opentlc.com
+oc login -u {secondary_openshift_cluster_admin_username} -p {secondary_openshift_cluster_admin_password} {secondary_openshift_api_server_url}
 ----
 +
 . You are again going to make an update to the price of the Quarkus T-shirt.  Update the price by running the below commands:
@@ -51,7 +51,7 @@ oc exec -it pod/$POD -n globex -- psql --dbname catalog --command "update catalo
 +
 image:images/secondary-price-updated.png[images/secondary-price-updated.png]
 +
-. Go back to the RHACM console and select *Applications* and filter on *Subscription*.  Click the 3 dots at the end of the *globex* application and select *Relocate application*.
+. Go back to the Hub Cluster RHACM console {hub_openshift_cluster_console_url} with the user / password and select *Applications* and filter on *Subscription*.  Click the 3 dots at the end of the *globex* application and select *Relocate application*.
 +
 image:images/rhacm-relocate-menu.png[images/rhacm-relocate-menu.png]
 +
