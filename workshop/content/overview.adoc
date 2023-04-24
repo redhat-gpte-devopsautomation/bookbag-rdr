@@ -54,13 +54,13 @@ In this workshop, you will learn how to achieve Business Continuity for your app
 
 The lab consists of three Red Hat OpenShift Clusters.
 
-*1. Hub Cluster 
-*2. Primary Cluster
-*3. Secondary Cluster
+* Hub Cluster 
+* Primary Cluster
+* Secondary Cluster
 
 You can access your Hub environment bastion server as {hub_bastion_ssh_user_name} with password {hub_bastion_ssh_password} with the following command:
 
-[source,bash,options="nowrap",subs="{markup-in-source}"]
+[source,bash,options="nowrap"]
 ----
 ssh {hub_ssh_command}
 ----
@@ -68,7 +68,6 @@ ssh {hub_ssh_command}
 === Workshop Information
 
 Informational messages generated for your workshop and can be used to access the Cluster's :
-
 [source,bash,options="nowrap"]
 ----
 Hub Cluster Information :
