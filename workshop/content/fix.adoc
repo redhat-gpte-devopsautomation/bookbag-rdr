@@ -33,6 +33,8 @@
 === Create Application On Primary
 
 [arabic]
+. Now you know how the DR works and how you can achieve Business Continuity for your application. Lets puts things to action now with troubleshooting an issue we have for an already configured sample application.
++
 . Go to the {hub_openshift_cluster_console_url}/[OpenShift
 console] and log in with your credentials username: {hub_openshift_cluster_admin_username} and password: {hub_openshift_cluster_admin_password}.
 +
