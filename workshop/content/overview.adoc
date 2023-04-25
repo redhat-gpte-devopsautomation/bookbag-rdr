@@ -62,10 +62,11 @@ You can access your Hub environment bastion server as {hub_bastion_ssh_user_name
 ssh {hub_bastion_ssh_user_name}@{hub_bastion_public_hostname}
 
 === Workshop Information
+The lab guide here will be your friend to follow through the lab. Incase you want to explore more, the following information would be userful.
 
-Informational messages generated for your workshop and can be used to access the Cluster's :
+Informational messages generated for your workshop and can be used to access the respective Cluster's :
 
-Hub Cluster Information :
+=== Hub Cluster Information
 Hub Cluster API URL - {hub_openshift_api_server_url}
 
 Hub Cluster Cluster Console URL - {hub_openshift_cluster_console_url}
@@ -82,7 +83,7 @@ Hub Cluster bastion ssh username - {hub_bastion_ssh_user_name}
 
 Hub Cluster ssh command information - {hub_ssh_command}
 
-Primary Cluster Information :
+=== Primary Cluster Information
 Primary Cluster API URL - {primary_openshift_api_server_url}
 
 Primary Cluster Cluster Console URL - {primary_openshift_cluster_console_url}
@@ -99,7 +100,7 @@ Primary Cluster bastion ssh username - {primary_bastion_ssh_user_name}
 
 Primary Cluster ssh command information - {primary_ssh_command}
 
-Secondary Cluster Information :
+=== Secondary Cluster Information
 Secondary Cluster API URL - {secondary_openshift_api_server_url}
 
 Secondary Cluster Cluster Console URL - {secondary_openshift_cluster_console_url}

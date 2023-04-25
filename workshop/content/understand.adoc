@@ -11,7 +11,6 @@
 :hub_ssh_command: %hub_ssh_command%
 
 :primary_openshift_api_server_url: %primary_openshift_api_server_url%
-
 :primary_openshift_cluster_console_url: %primary_openshift_cluster_console_url%
 :primary_openshift_cluster_admin_username: %primary_openshift_cluster_admin_username%
 :primary_openshift_cluster_admin_password: %primary_openshift_cluster_admin_password%
@@ -33,7 +32,7 @@
 === Create Application On Primary
 
 [arabic]
-. Go to the link:{hub_openshift_cluster_console_url}[OpenShift
+. Go to the {hub_openshift_cluster_console_url}[OpenShift
 console for Hub Cluster] and log in with your credentials username: {hub_openshift_cluster_admin_username} and password: {hub_openshift_cluster_admin_password}.
 Since this is a lab environment with single participant, we use admin username and password but in real life scenario it will be role based access control.
 +
