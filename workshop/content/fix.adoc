@@ -32,6 +32,17 @@
 
 === Create Application On Primary
 
+. *Create the Sample Application using ACM console.* +
+Use the sample app example from https://github.com/RamenDR/ocm-ramen-samples to create a busybox deployment for failover and failback testing.
+. *Validate Sample Application deployment.* +
+Using CLI commands on both managed clusters validate that the application is running.
+. *Apply DRPolicy to Sample Application.* +
+Use the All Clusters Data Services UI to apply the new DRPolicy to the Sample Application. Once applied a DRPlacementControl resource will be created in the application namespace on the Hub cluster.
+. *Failover Sample Application to secondary managed cluster.* +
+Modify the application DRPlacementControl resource on the Hub Cluster, add the action of Failover and specify the failoverCluster to trigger the failover.
+. *Failback Sample Application to primary managed cluster.* +
+Modify the application DRPlacementControl resource on the Hub Cluster and change the action to Relocate to trigger a failback to the preferredCluster.
+
 [arabic]
 . Now you know how the DR works and how you can achieve Business Continuity for your application. Lets puts things to action now with troubleshooting an issue we have for an already configured sample application.
 +

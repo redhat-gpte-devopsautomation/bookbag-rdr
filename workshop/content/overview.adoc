@@ -43,7 +43,7 @@ Finally, we onboard a sample application to be part of Disaster Recovery strateg
 
 In this workshop, you will learn how to achieve Business Continuity for your applications hosted on Red Hat OpenShift platform. Understand some of the implementation aspects of disaster recovery on Red Hat OpenShift Platform. Persistent storage requirement is key to many application and to achieve disaster recovery for such applications, data replication becomes very important. In this lab we will leverage Red Hat OpenShift Data Foundations Storage.
 
-The lab is divided into 5 main sections (expecting 15 minutes per section, last section may take more or less time depending on how comfortable are you with the previous section understanding):
+The lab is divided into 5 main sections (expecting 15 minutes per section, last section may take more or less time depending on how comfortable you are with the previous section understanding):
 
 * Understand the Implementation spects of the environment.
 * Deploy Globex Application on Primary.
