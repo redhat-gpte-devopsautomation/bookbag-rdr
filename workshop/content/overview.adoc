@@ -39,16 +39,15 @@ We'll discuss:
 
 * Disaster recovery and business continuity strategies and demonstrate how to use Red Hat OpenShift disaster recovery features to implement service availability at predefined acceptable levels following a disruptive incident. 
 * How to failover an application requiring data persistence using Advanced Cluster Manager and Red Hat OpenShift Data Foundation.
-* Disaster recovery impact on the application continuous deployment with ArgoCD.
 * Best practices.
 
-In the hands on lab participant will understand the nuances of how to setup an application to continue working during disaster recovery. We will use a real life application called Globex for a fictitios e-commerce company selling goods online. Deploy and setup application for business continuity. 
-We test by updating the data and demonstrate the failover and relocate ensure that the persistent data is consistent and available.
-Finally we troubleshoot and fix a small sample application to be part of Disaster Recovery strategy and test failover/relocate.
+In the hands on lab participant will understand the nuances of how to setup an application to continue working during disaster recovery. We will use a real life e-retailer application for a fictitious company called Globex selling goods online. Deploy and setup this application for business continuity. 
+Further, we will test the data persistency across failover/failback scenarios by updating the data in the database. Verify that the data is consistent and available after transition from one site to another.
+Finally, we troubleshoot and fix a small sample application to be part of Disaster Recovery strategy and test failover/relocate.
 
 == Intro
 
-In this workshop, you will learn how to achieve Business Continuity for your applications hosted on Red Hat OpenShift platform. We will understand some of the implementation aspects of disaster recovery on Red Hat OpenShift Platform. Persistent storage requirement is key to many application and to achieve disaster recovery for such applications, data replication becomes very important. In this lab we will leverage Red Hat OpenShift Data Foundations Storage.
+In this workshop, you will learn how to achieve Business Continuity for your applications hosted on Red Hat OpenShift platform. Understand some of the implementation aspects of disaster recovery on Red Hat OpenShift Platform. Persistent storage requirement is key to many application and to achieve disaster recovery for such applications, data replication becomes very important. In this lab we will leverage Red Hat OpenShift Data Foundations Storage.
 
 === Lab Access
 

@@ -33,7 +33,7 @@
 === Create Application On Primary
 
 [arabic]
-. Go to the {hub_openshift_cluster_console_url} / [OpenShift
+. Go to the link:{hub_openshift_cluster_console_url}[OpenShift
 console] and log in with your credentials username: {hub_openshift_cluster_admin_username} and password: {hub_openshift_cluster_admin_password}.
 +
 image:images/openshift-login.png[images/openshift-login.png]
