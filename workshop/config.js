@@ -8,13 +8,22 @@ function flatten_vars(vars_object) {
   }
   return ret
 }
+
+// function flatten_vars(vars_object) {
+//   const ret = {}
+//   for (const varname in vars_object) {
+//     const value = vars_object[varname];
 //     if (typeof value === 'object') {
 //       const flattened_vars = flatten_vars(value);
 //       for (const k in flattened_vars) {
 //         ret[varname + '.' + k] = flattened_vars[k]
 //       }
 //     } else {
+//       ret[varname] = value;
+//     }
 //   }
+//   return ret
+// }
 
 
 
