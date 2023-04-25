@@ -3,7 +3,9 @@ name: Bookbag Template
 modules:
   activate:
     - overview
-    - Lab1
-    - Lab2
-    - Lab3
+    - understand
+    - create_application
+    - failover
+    - relocate
+    - fix 
     - review

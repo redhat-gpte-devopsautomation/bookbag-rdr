@@ -3,14 +3,20 @@ modules:
   overview:
     name: Overview
     exit_sign: Continue
-  Lab1:
-    name: Lab 1 - Detection of Anomalies in Sensor Data
+  understand:
+    name: Understand the Implementation
     exit_sign: Continue
-  Lab2:
-    name: Lab 2 - Generate Synthetic Sensor Data
+  create_application:
+    name: Create Application On Primary
     exit_sign: Continue
-  Lab3:
-    name: Lab 3 - Predicting Failure of Generic Sensors
+  failover:
+    name: Failover Application To Secondary
+    exit_sign: Continue
+  relocate:
+    name: Relocate Application To Primary
+    exit_sign: Continue
+  fix:
+    name: Fix a Sample Application for Disaster Recovery
     exit_sign: Continue
   review:
     name: Review
