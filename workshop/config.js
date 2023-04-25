@@ -4,7 +4,7 @@ function flatten_vars(vars_object) {
   const ret = {}
   for (const varname in vars_object) {
     const value = vars_object[varname];
-    ret[varname] = value;
+    ret[varname] = value.replace(/"/g, '');
   }
   return ret
 }
