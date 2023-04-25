@@ -35,23 +35,24 @@ Welcome to Achieve business continuity with Red Hat OpenShift Container Platform
 
 Organizations running critical applications on Red Hat OpenShift Container Platform need a business continuity plan for site and regional disasters that goes beyond cluster failover or backup and recovery. Its implementation should provide data resiliency and take into account the application continuous deployment practices as a part of the overall enterprise GitOps strategies.
 
-We'll discuss:
-
-In the hands on lab participant will understand the nuances of how to setup an application to continue working during disaster recovery. We will use a real life e-retailer application for a fictitious company called Globex selling goods online. Learn how to Deploy and setup this application for business continuity. 
-Further, we will test the data persistency across failover/failback scenarios by updating the data in the database. Verify that the data is consistent and available after transition from one site to another.
-Finally, we onboard a sample application to be part of Disaster Recovery strategy and test failover/relocate.This time without any guided information and test your understanding. 
+In the hands on lab you will understand the nuances of how to setup an application to continue working during a disaster and recovered on another site/cluster. We will use a real life e-retailer application for a fictitious company called Globex selling goods online. Learn how to Deploy and setup this application for business continuity. 
+Further, we will test the data persistency across failover/failback scenarios by updating the data in the database. Verify that the data is consistent and available after transition from one site/cluster to another.
+Finally, we onboard a sample application to be part of Disaster Recovery strategy and test failover/relocate(failback).This time without any guided information to test your understanding. 
 
 == Intro
 
 In this workshop, you will learn how to achieve Business Continuity for your applications hosted on Red Hat OpenShift platform. Understand some of the implementation aspects of disaster recovery on Red Hat OpenShift Platform. Persistent storage requirement is key to many application and to achieve disaster recovery for such applications, data replication becomes very important. In this lab we will leverage Red Hat OpenShift Data Foundations Storage.
 
-The lab is divided into 5 main sections (expecting 15 minutes per section):
+The lab is divided into 5 main sections (expecting 15 minutes per section, last section may take more or less time depending on how comfortable are you with the previous section understanding):
 
 * Understand the Implementation spects of the environment.
 * Deploy Globex Application on Primary.
 * Failover Globex Application on Secondary.
 * Relocate Application to Primary (FailBack).
 * Import a sample application for Business Continuity using Regional DR we just learned.
+
+[NOTE]
+Read the instructions carefully before you execute the commands. There are multiple cluster's involved, ensure that you double check before you execute a specific command or update the UI since username and password for all the cluster's are same.
 
 === Lab Access
 
