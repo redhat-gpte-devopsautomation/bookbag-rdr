@@ -280,7 +280,7 @@ NOTE: The successful installation of ODF can also be validated in the *OCP Web C
 
 == Verify ODF Multicluster Orchestrator Operator on Hub cluster
 
-Check to see the operators *Pod* are in a `Running` state. The `OpenShift DR Hub` operator will be installed at the same time in `openshift-operators`.
+Check to see the following operators *Pod* are in a `Running` state. You may also see other operator pods which are not related to Regional DR configuration.
 
 For Hub:
 [source,role="execute"]
@@ -303,119 +303,22 @@ odf-multicluster-console-76b88b444c-vl9s4  1/1     Running   0          3m50s
 
 == Configure SSL access between S3 endpoints
 
-These steps are necessary so that metadata can be stored on the alternate cluster in a Multi-Cloud Gateway (MCG) object bucket using a secure transport protocol and in addition the *Hub cluster* needs to verify access to the object buckets.
+This are necessary so that metadata can be stored on the alternate cluster in a Multi-Cloud Gateway (MCG) object bucket using a secure transport protocol and in addition the *Hub cluster* needs to verify access to the object buckets.
 
-NOTE: If all of your OpenShift clusters are deployed using signed and valid set of certificates for your environment then this section can be skipped.
-
-Extract the ingress certificate for the *Primary managed cluster* and save the output to `primary.crt`.
-
-[source,role="execute"]
-----
-oc get cm default-ingress-cert -n openshift-config-managed -o jsonpath="{['data']['ca-bundle\.crt']}" > primary.crt
-----
-
-Extract the ingress certificate for the *Secondary managed cluster* and save the output to `secondary.crt`.
-
-[source,role="execute"]
-----
-oc get cm default-ingress-cert -n openshift-config-managed -o jsonpath="{['data']['ca-bundle\.crt']}" > secondary.crt
-----
-
-Create a new YAML file `cm-clusters-crt.yaml` to hold the certificate bundle for both the *Primary managed cluster* and the *Secondary managed cluster*.
-
-NOTE: There could be more or less than three certificates for each cluster as shown in this example file.
-
-[source,yaml]
-----
-apiVersion: v1
-data:
-  ca-bundle.crt: |
-    -----BEGIN CERTIFICATE-----
-    <copy contents of cert1 from primary.crt here>
-    -----END CERTIFICATE-----
-    
-    -----BEGIN CERTIFICATE-----
-    <copy contents of cert2 from primary.crt here>
-    -----END CERTIFICATE-----
-    
-    -----BEGIN CERTIFICATE-----
-    <copy contents of cert3 primary.crt here>
-    -----END CERTIFICATE----
-    
-    -----BEGIN CERTIFICATE-----
-    <copy contents of cert1 from secondary.crt here>
-    -----END CERTIFICATE-----
-    
-    -----BEGIN CERTIFICATE-----
-    <copy contents of cert2 from secondary.crt here>
-    -----END CERTIFICATE-----
-    
-    -----BEGIN CERTIFICATE-----
-    <copy contents of cert3 from secondary.crt here>
-    -----END CERTIFICATE-----  
-kind: ConfigMap
-metadata:
-  name: user-ca-bundle 
-  namespace: openshift-config
-----
-
-This *ConfigMap* needs to be created on the *Primary managed cluster*, *Secondary managed cluster*, _and_ the *Hub cluster*.
-
-[source,role="execute"]
-----
-oc create -f cm-clusters-crt.yaml
-----
-.Example output.
-----
-configmap/user-ca-bundle created
-----
-
-IMPORTANT: The *Hub cluster* needs to verify access to the object buckets using the *DRPolicy* resource. Therefore the same *ConfigMap*, `cm-clusters-crt.yaml`, needs to be created on the *Hub cluster*.
-
-After all the `user-ca-bundle` *ConfigMaps* are created, the default *Proxy* `cluster` resource needs to be modified.
-
-Patch the default *Proxy* resource on the *Primary managed cluster*, *Secondary managed cluster*, and the *Hub cluster*.
-  
-[source,role="execute"]
-----
-oc patch proxy cluster --type=merge  --patch='{"spec":{"trustedCA":{"name":"user-ca-bundle"}}}'
-----
-.Example output.
-----
-proxy.config.openshift.io/cluster patched
-----
-
-== Enabling Multicluster Web Console
-
-This is a new capability that is required before creating a Data Policy or *DRPolicy*. It is only needed on the *Hub cluster* and `RHACM 2.7` must be installed.
-
-IMPORTANT: Multicluster console is a Technology Preview feature only. Technology Preview features are not supported with Red Hat production service level agreements (SLAs) and might not be functionally complete. Red Hat does not recommend using them in production. These features provide early access to upcoming product features, enabling customers to test functionality and provide feedback during the development process.
-
-Enable the feature gate by navigating from *Administration* → *Cluster Settings* → *Configuration* → *FeatureGate*, and edit the YAML template as follows:
-
-[source,role="execute"]
-----
-[...]
-spec:
-  featureSet: TechPreviewNoUpgrade
-----
-
-Click *Save* to enable the multicluster console for all clusters in the `RHACM` console.
-
-WARNING: Do not set this feature gate on production clusters. You will not be able to upgrade your cluster after applying the feature gate, and it cannot be undone.
+NOTE: If all of your OpenShift clusters are deployed using signed and valid set of certificates for your environment then this is not required.
 
 == Create Data Policy on Hub cluster
 
-Regional Disaster Recovery uses the *DRPolicy* resources on the *Hub cluster* to failover and relocate workloads across managed clusters. A *DRPolicy* requires a set of two *DRClusters* or peer clusters with *ODF* version 4.11 installed. The `ODF MultiCluster Orchestrator Operator` facilitates the creation of each *DRPolicy* and the corresponding *DRClusters* through the *Multicluster Web console*.
+Regional Disaster Recovery uses the *DRPolicy* resources on the *Hub cluster* to failover and relocate workloads across managed clusters. A *DRPolicy* requires a set of two *DRClusters* or peer clusters with *ODF* version 4.12 installed. The `ODF MultiCluster Orchestrator Operator` facilitates the creation of each *DRPolicy* and the corresponding *DRClusters* through the *Multicluster Web console*.
 
 On the *Hub cluster* navigate to `All Clusters`. Then navigate to *Data policies* under Data services menu. If this your first *DRPolicy* created you will see *Create DRpolicy* at the bottom of the page.
 
-IMPORTANT: Make sure to login to all clusters from the *Multicluster Web console*. The clusters will be directly below `All Clusters`.
+IMPORTANT: Make sure you can access all clusters from the *Multicluster Web console*. The clusters will be directly below `All Clusters`.
 
 .Multicluster console Data policies
 image:images/MCO-create-first-drpolicy.png[Multicluster console Data policies]
 
-Click on *Create DRPolicy*. Select the clusters presented from the list of managed clusters that you would like to participate in the *DRPolicy* and give the policy a unique name (i.e., ocp4bos1-ocp4bos2-5m). 
+Click on *Data policies* and review the already created drpolicy named `drsync5m` b . 
 
 .DRPolicy select peer clusters 
 image:images/MCO-bos-drpolicy-selections.png[DRPolicy select peer clusters]
@@ -439,13 +342,19 @@ This should create the two *DRCluster* resources and also the *DRPolicy* on the 
 * The object buckets *Secrets* on the *Hub cluster* in the project `openshift-operators` will be copied to the managed clusters in the `openshift-dr-system` project.
 * The `s3StoreProfiles` entries will be copied to the managed clusters and used to modify the `ramen-dr-cluster-operator-config` *ConfigMap* in the `openshift-dr-system` project.
 
-To validate that the *DRPolicy* is created successfully run this command on the *Hub cluster* for the each *DRPolicy* resource created. 
+To validate that the *DRPolicy* is created successfully run this command on the *Hub cluster* for the each *Data Policy* resource created. 
 
 NOTE: Replace `<drpolicy_name>` with your unique name.
 
+For Hub (drpolicy name is drsync5m):
 [source,role="execute"]
 ----
-oc get drpolicy <drpolicy_name> -o jsonpath='{.status.conditions[].reason}{"\n"}'
+oc login -u %hub_openshift_cluster_admin_username% -p %hub_openshift_cluster_admin_password% %hub_openshift_api_server_url%
+----
+
+[source,role="execute"]
+----
+oc get drpolicy drsync5m -o jsonpath='{.status.conditions[].reason}{"\n"}'
 ----
 .Example output.
 ----
@@ -461,8 +370,8 @@ oc get drclusters
 .Example output.
 ----
 NAME        AGE
-ocp4bos1   4m42s
-ocp4bos2   4m42s
+primary   4m42s
+secondary   4m42s
 ----
 
 Now test S3 access to each bucket created on each managed cluster using this *DRCluster* validation command.
@@ -471,7 +380,16 @@ NOTE: Replace `<drcluster_name>` with your unique name.
 
 [source,role="execute"]
 ----
-oc get drcluster <drcluster_name> -o jsonpath='{.status.conditions[2].reason}{"\n"}'
+oc get drcluster primary -o jsonpath='{.status.conditions[2].reason}{"\n"}'
+----
+.Example output.
+----
+Succeeded
+----
+
+[source,role="execute"]
+----
+oc get drcluster secondary -o jsonpath='{.status.conditions[2].reason}{"\n"}'
 ----
 .Example output.
 ----
