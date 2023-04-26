@@ -147,7 +147,7 @@ console] and log in with your credentials username: {hub_openshift_cluster_admin
 
 image:images/openshift-login.png[images/openshift-login.png]
 
-=== Verify Managed clusters which are imported correctly
+=== Verify Managed clusters are imported correctly
 Select All Clusters and verify that you can see local and two managed clusters - primnary and secondary
 
 image:images/ACM-all-cluster-hub.png[images/ACM-all-cluster-hub.png]
@@ -222,20 +222,18 @@ oc get networks.config.openshift.io cluster -o json | jq .spec
 
 These outputs show that the two example managed clusters have non-overlapping `clusterNetwork` and `serviceNetwork` ranges so it is safe to proceed.
 
-=== Connect the Managed clusters using Submariner add-ons
+=== Verify that the Managed clusters using Submariner add-ons are fine
 
 Now that we know the `cluster` and `service` networks have non-overlapping ranges, it is time to verify the `Submariner add-ons` for each managed cluster. This is done by using the ACM console and `Cluster sets`.
 
-Navigate to selection shown below and at the bottom of the same page, select *Create cluster set*.
-
-A successful deployment will show `Connection status` and `Agent status` as `Healthy`.
+Navigate to `clusterset1`. A successful deployment will show `Connection status` and `Agent status` as `Healthy`.
 
 .ACM Submariner add-ons installed
 image:images/ACM-Submariner-addon-installed.png[ACM Submariner add-ons installed]
 
-== OpenShift Data Foundation Installation
+== OpenShift Data Foundation Review
 
-In order to configure storage replication between the two OCP clusters `OpenShift Data Foundation` (ODF) must be installed first on each managed cluster. ODF deployment guides and instructions are specific to your infrastructure (i.e. AWS, VMware, BM, Azure, etc.). Install ODF version *4.12* on both OCP managed clusters.
+In order to configure storage replication between the two OCP clusters `OpenShift Data Foundation` (ODF) must be installed first on each managed cluster. ODF version *4.12* is installed on both OCP managed clusters.
 
 You can validate the successful deployment of ODF on each managed OCP cluster with the following command:
 For primary :
@@ -301,13 +299,13 @@ ramen-hub-operator-85465bd487-7sl2k        2/2     Running   0          3m40s
 odf-multicluster-console-76b88b444c-vl9s4  1/1     Running   0          3m50s
 ----
 
-== Configure SSL access between S3 endpoints
+== SSL access between S3 endpoints is configured in this Lab Environment
 
-This are necessary so that metadata can be stored on the alternate cluster in a Multi-Cloud Gateway (MCG) object bucket using a secure transport protocol and in addition the *Hub cluster* needs to verify access to the object buckets.
+This is necessary so that metadata can be stored on the alternate cluster in a Multi-Cloud Gateway (MCG) object bucket using a secure transport protocol and in addition the *Hub cluster* needs to verify access to the object buckets.
 
-NOTE: If all of your OpenShift clusters are deployed using signed and valid set of certificates for your environment then this is not required.
+NOTE: If all of your OpenShift clusters are deployed using signed and valid set of certificates for your environment then this specific step can be skipped during implementation.
 
-== Create Data Policy on Hub cluster
+== Review Data Policy on Hub cluster
 
 Regional Disaster Recovery uses the *DRPolicy* resources on the *Hub cluster* to failover and relocate workloads across managed clusters. A *DRPolicy* requires a set of two *DRClusters* or peer clusters with *ODF* version 4.12 installed. The `ODF MultiCluster Orchestrator Operator` facilitates the creation of each *DRPolicy* and the corresponding *DRClusters* through the *Multicluster Web console*.
 
