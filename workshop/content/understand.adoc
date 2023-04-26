@@ -160,7 +160,10 @@ For that you have a terminal window along with your workshop modules. You can us
 If you want you can also ssh to each cluster separately using mutliple terminal windows outside of this browser based termninal window.
 
 For primary :
+[source,role="execute"]
+----
 oc login -u {primary_openshift_cluster_admin_username} -p {primary_openshift_cluster_admin_password} {primary_openshift_api_server_url}
+----
 
 [source,role="execute"]
 ----
