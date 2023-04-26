@@ -134,32 +134,23 @@ Use the All Clusters Data Services UI to create DRPolicy by selecting the two ma
 Once the first DRPolicy is created this will trigger the DR Cluster operators to be created on the two managed clusters selected in the UI.
 . *Following this we can setup an application using RHACM console and test failover/relocate.*
 * Create an application using RHACM console for highly available application across regions.
-* Test failover and reolcate operations using the sampole appklication between managed clusters.
+* Test failover and reolcate operations using the sampole application between managed clusters.
 
 === Review the implementation
 
-Logon to the Hub Cluster ACM console using your OpenShift credentials.
+Lets start by reviewing the implementation and ensuring that everything is working fine so that we can deploy an application onto OpenShift and achieve Business Continuity leveraging Regional-DR.
 
-First, find the *Route* that has been created for the ACM console on the hub cluster:
+Logon to the Hub Cluster ACM console using your OpenShift credentials. 
 
-[source,role="execute"]
-----
-oc get route multicloud-console -n open-cluster-management -o jsonpath --template="https://{.spec.host}/multicloud/clusters{'\n'}"
-----
-
-This will return a route similar to this one.
-
-.Example Output:
-----
-https://multicloud-console.apps.bos3.example.com/multicloud/clusters
-----
-
-After logging in you should see your local cluster imported.
-
-.ACM local cluster imported
-image::ACM-local-cluster-import.png[ACM local cluster imported]
+Go to the {hub_openshift_cluster_console_url}/[OpenShift
+console] and log in with your credentials username: {hub_openshift_cluster_admin_username} and password: {hub_openshift_cluster_admin_password}.
++
+image:images/openshift-login.png[images/openshift-login.png]
++
+Select All Clusters and verify that you can see local and two managed clusters - primnary and secondary
 
 === Verify Managed clusters which are imported correctly
+image:images/ACM-all-cluster-hub.png[images/ACM-all-cluster-hub.png]
 
 === Verify Managed clusters have non-overlapping networks
 
