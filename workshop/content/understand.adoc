@@ -231,7 +231,7 @@ Navigate to selection shown below and at the bottom of the same page, select *Cr
 A successful deployment will show `Connection status` and `Agent status` as `Healthy`.
 
 .ACM Submariner add-ons installed
-image:images/ACM-bos-Submariner-addon-installed.png[ACM Submariner add-ons installed]
+image:images/ACM-Submariner-addon-installed.png[ACM Submariner add-ons installed]
 
 == OpenShift Data Foundation Installation
 
@@ -311,14 +311,14 @@ NOTE: If all of your OpenShift clusters are deployed using signed and valid set 
 
 Regional Disaster Recovery uses the *DRPolicy* resources on the *Hub cluster* to failover and relocate workloads across managed clusters. A *DRPolicy* requires a set of two *DRClusters* or peer clusters with *ODF* version 4.12 installed. The `ODF MultiCluster Orchestrator Operator` facilitates the creation of each *DRPolicy* and the corresponding *DRClusters* through the *Multicluster Web console*.
 
-On the *Hub cluster* navigate to `All Clusters`. Then navigate to *Data policies* under Data services menu. If this your first *DRPolicy* created you will see *Create DRpolicy* at the bottom of the page.
+On the *Hub cluster* navigate to `All Clusters`. Then navigate to *Data policies* under Data services menu. If this your first *DRPolicy* created you will see *Create DRpolicy* at the bottom of the page, else you will the the already created DRPolicy.
 
 IMPORTANT: Make sure you can access all clusters from the *Multicluster Web console*. The clusters will be directly below `All Clusters`.
 
 .Multicluster console Data policies
 image:images/MCO-create-first-drpolicy.png[Multicluster console Data policies]
 
-Click on *Data policies* and review the already created drpolicy named `drsync5m` b . 
+Click on *Data policies* and review the already created drpolicy named `drsync5m` 
 
 .DRPolicy select peer clusters 
 image:images/MCO-bos-drpolicy-selections.png[DRPolicy select peer clusters]
@@ -370,7 +370,7 @@ oc get drclusters
 .Example output.
 ----
 NAME        AGE
-primary   4m42s
+primary     4m42s
 secondary   4m42s
 ----
 
