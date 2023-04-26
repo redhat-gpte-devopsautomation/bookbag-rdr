@@ -162,7 +162,7 @@ If you want you can also ssh to each cluster separately using mutliple terminal 
 For primary :
 [source,role="execute"]
 ----
-oc login -u %primary_openshift_cluster_admin_username% -p %primary_openshift_cluster_admin_password% ${primary_openshift_api_server_url}
+oc login -u %primary_openshift_cluster_admin_username% -p %primary_openshift_cluster_admin_password% %primary_openshift_api_server_url%
 ----
 
 [source,role="execute"]
@@ -192,7 +192,7 @@ oc get networks.config.openshift.io cluster -o json | jq .spec
 For Secondary:
 [source,role="execute"]
 ----
-oc login -u {secondary_openshift_cluster_admin_username} -p {secondary_openshift_cluster_admin_password} {secondary_openshift_api_server_url}
+oc login -u %secondary_openshift_cluster_admin_username% -p %secondary_openshift_cluster_admin_password% %secondary_openshift_api_server_url%
 ----
 
 [source,role="execute"]
