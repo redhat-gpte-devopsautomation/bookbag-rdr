@@ -434,9 +434,15 @@ pod/ramen-dr-cluster-operator-5564f9d669-f6lbc   2/2     Running   0          5m
 You can also go to *OperatorHub* on each of the managed clusters and look to see the `OpenShift DR Cluster Operator` is installed.
 
 .ODR Cluster Operator
-image:images/ODR-411-Cluster-operator.png[ODR Cluster Operator]
+image:images/ODR-412-Cluster-operator.png[ODR Cluster Operator]
 
 Validate the status of the *ODF* mirroring `daemon` health on the *Primary managed cluster* and the *Secondary managed cluster*.
+
+For Primary:
+[source,role="execute"]
+----
+oc login -u %primary_openshift_cluster_admin_username% -p %primary_openshift_cluster_admin_password% %primary_openshift_api_server_url%
+----
 
 [source,role="execute"]
 ----
@@ -447,221 +453,21 @@ oc get cephblockpool ocs-storagecluster-cephblockpool -n openshift-storage -o js
 {"daemon_health":"OK","health":"OK","image_health":"OK","states":{}}
 ----
 
-CAUTION: It could take up to 10 minutes for the `daemon_health` and `health` to go from *Warning* to *OK*. If the status does not become *OK* eventually then use the ACM console to verify that the `Submariner` connection between managed clusters is still in a healthy state. Do not proceed until all values are *OK*. 
-
-== Create Sample Application for DR testing
-
-In order to test failover from the *Primary managed cluster* to the *Secondary managed cluster* and back again we need a simple application. The sample application used for this example with be `busybox`. 
-
-=== Creating Sample Application using ACM console
-
-Start by loggin into the ACM console using your OpenShift credentials if not already logged in.
+For Secondary:
+[source,role="execute"]
+----
+oc login -u %secondary_openshift_cluster_admin_username% -p %secondary_openshift_cluster_admin_password% %secondary_openshift_api_server_url%
+----
 
 [source,role="execute"]
 ----
-oc get route multicloud-console -n open-cluster-management -o jsonpath --template="https://{.spec.host}/multicloud/applications{'\n'}"
-----
-
-This will return a route similar to this one.
-
-.Example Output:
-----
-https://multicloud-console.apps.bos3.example.com/multicloud/applications
-----
-
-After logging in select *Create application* in the top right and choose *Subscription*.
-
-.ACM Create application
-image:images/ACM-411-Create-application.png[ACM Create application]
-
-Fill out the top of the `Create an application` form as shown below and select repository type *Git*.
-
-.ACM Application name and namespace
-image:images/ACM-application-form1.png[ACM Application name and namespace]
-
-The next section to fill out is below the *Git* box and is the repository URL for the sample application, the *github* branch and path to resources that will be created, the `busybox` *Pod* and *PVC*. 
-
-NOTE: *Sample application repository* https://github.com/RamenDR/ocm-ramen-samples. Branch is `main` and path is `busybox-odr`. 
-
-.ACM application repository information
-image:images/ACM-application-form2a.png[ACM application repository information]
-
-Scroll down in the form until you see *Deploy application resources only on clusters matching specified labels* and then add a label for the *Primary managed cluster* name in *RHACM* cluster list view.
-
-.ACM Select cluster for deployment 
-image:images/ACM-bos-application-form3a.png[ACM Select cluster for deployment]
-
-After adding the `Label` to identify the cluster, select *Save* in the upper right hand corner.
-
-On the follow-on screen go to the `Topology` tab. You should see that there are all *Green* checkmarks on the application topology.
-
-.ACM application successful topology view
-image:images/ACM-bos-25-application-successfull.png[ACM application successful topology view]
-
-NOTE: To get more information click on any of the topology elements and a window will appear to right of the topology view.
-
-=== Validating Sample Application deployment
-
-Now that the `busybox` application has been deployed to your *Primary managed cluster* the deployment can be validated.
-
-Logon to your managed cluster where `busybox` was deployed by ACM. This is most likely your *Primary managed cluster*.
-
-[source,role="execute"]
-----
-oc get pods,pvc -n busybox-sample
+oc get cephblockpool ocs-storagecluster-cephblockpool -n openshift-storage -o jsonpath='{.status.mirroringStatus.summary}{"\n"}'
 ----
 .Example output.
 ----
-NAME          READY   STATUS    RESTARTS   AGE
-pod/busybox   1/1     Running   0          6m
-
-NAME                                STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS                  AGE
-persistentvolumeclaim/busybox-pvc   Bound    pvc-a56c138a-a1a9-4465-927f-af02afbbff37   1Gi        RWO            ocs-storagecluster-ceph-rbd   6m
+{"daemon_health":"OK","health":"OK","image_health":"OK","states":{}}
 ----
 
-=== Apply DRPolicy to Sample Application
+CAUTION: It could take up to 10 minutes for the `daemon_health` and `health` to go from *Warning* to *OK*. If the status does not become *OK* eventually then use the ACM console to verify that the `Submariner` connection between managed clusters is still in a healthy state. 
 
-On the *Hub cluster* go back to the *Multicluster Web console* and select `All Clusters` in the top right hand corner. 
-
-IMPORTANT: Make sure to login to all clusters from the *Multicluster Web console*. The clusters will be directly below `All Clusters`.
-
-Navigate to `Data Services` and then choose `Data policies`. You should see the *DRPolicy* you created earlier in these instructions, section <<Create Data Policy on Hub cluster>>. At the far right of the *DRPolicy* select the vertical dots as shown below. 
-
-.Apply DRPolicy
-image:images/MCO-bos-apply-drpolicy.png[Apply DRPolicy]
-
-When the *Apply DRPolicy* box appears select `busybox` and then *Apply*.
-
-.DRPolicy select application
-image:images/MCO-bos-select-application.png[DRPolicy select application]
-
-Validate that a `DRPlacementControl` or `DRPC` was created in the `busybox-sample` namespace on the *Hub cluster*. This resource is used for both `failover` and `failback` actions for this application.
-
-[source,role="execute"]
-----
-oc get drpc -n busybox-sample
-----
-.Example output.
-----
-NAME                       AGE     PREFERREDCLUSTER   FAILOVERCLUSTER   DESIREDSTATE   CURRENTSTATE
-busybox-placement-1-drpc   6m59s   ocp4bos1                                           Deployed
-----
-
-=== Deleting the Sample Application
-
-Deleting the `busybox` application can be done using the ACM console. Navigate to *Applications* and then find the application to be deleted (busybox in this case).
-
-NOTE: The instructions to delete the sample application should not be executed until the failover and failback (relocate) testing is completed and you want to remove this application from RHACM and from the managed clusters.
-
-.ACM delete busybox application
-image:images/ACM-application-delete.png[ACM delete busybox application]
-
-When *Delete application* is selected a new screen will appear asking if the `application related resources` should also be deleted. Make sure to `check` the box to delete the `Subscription` and `PlacementRule`.
-
-.ACM delete busybox application resources
-image:images/ACM-application-delete-resources.png[ACM delete busybox application resources]
-
-Select *Delete* in this screen. This will delete the `busybox` application on the *Primary managed cluster* (or whatever cluster the application was running on).
-
-In addition to the resources deleted using the ACM console, the `DRPlacementControl` must also be deleted immediately after deleting the `busybox` application. Logon to the OpenShift Web console for the *Hub cluster*. Navigate to `Installed Operators` for the project `busybox-sample`. Choose `OpenShift DR Hub Operator` and the *DRPlacementControl*.
-
-.Delete busybox application DRPlacementControl
-image:images/ODR-411-DRPlacementControl-delete.png[Delete busybox application DRPlacementControl]
-
-Select *Delete DRPlacementControl*. 
-
-NOTE: If desired, the `DRPlacementControl` resource can also be deleted in the application namespace using CLI.
-
-NOTE: This process can be used to delete any application with a DRPlacementControl resource.
-
-== Application Failover between managed clusters
-
-This section will detail how to failover the `busybox` sample application. The failover method for `Metro Disaster Recovery` is application based. Each application that is to be protected in this manner must have a corresponding *DRPlacementControl* in the application namespace as shown in the <<Apply DRPolicy to Sample Application>> section.
-
-=== Modify DRPlacementControl to failover
-
-To failover requires modifying the *DRPlacementControl* YAML view. On the *Hub cluster* navigate to `Installed Operators` and then to `Openshift DR Hub Operator`. Select *DRPlacementControl* as show below.
-
-NOTE: Make sure to be in the `busybox-sample` namespace.
-
-.DRPlacementControl busybox instance
-image:images/ODR-411-DRPlacementControl-instance.png[DRPlacementControl busybox instance]
-
-Select `busybox-placement-1-drpc` and then the YAML view. Add the `action` and `failoverCluster` as shown below. The `failoverCluster` should be the *ACM* cluster name for the *Secondary managed cluster*.
-
-.DRPlacementControl add action Failover
-image:images/ODR-bos-411-DRPlacementControl-failover.png[DRPlacementControl add action Failover]
-
-Select *Save*.
-
-In the `failoverCluster` specified in the YAML file (i.e., ocp4bos2), see if the application `busybox` is now running in the *Secondary managed cluster* using the following command:
-
-[source,role="execute"]
-----
-oc get pods,pvc -n busybox-sample
-----
-.Example output.
-----
-NAME          READY   STATUS    RESTARTS   AGE
-pod/busybox   1/1     Running   0          35s
-
-NAME                                STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS                  AGE
-persistentvolumeclaim/busybox-pvc   Bound    pvc-79f2a74d-6e2c-48fb-9ed9-666b74cfa1bb   5Gi        RWO            ocs-storagecluster-ceph-rbd   35s
-----
-
-Next, using the same command check if `busybox` is running in the *Primary managed cluster*. The `busybox` application should no longer be running on this managed cluster.
-
-[source,role="execute"]
-----
-oc get pods,pvc -n busybox-sample
-----
-.Example output.
-----
-No resources found in busybox-sample namespace.
-----
-
-== Application Failback between managed clusters
-
-A failback operation is very similar to failover. The failback is application based and again uses the *DRPlacementControl* `action` value to trigger the failback. In this case the `action` is *Relocate* to the `preferredCluster`. 
-
-=== Modify DRPlacementControl to failback
-
-To failback requires modifying the *DRPlacementControl* YAML view. On the *Hub cluster* navigate to `Installed Operators` and then to `Openshift DR Hub Operator`. Select *DRPlacementControl* as show below.
-
-NOTE: Make sure to be in the `busybox-sample` namespace.
-
-.DRPlacementControl busybox instance
-image:images/ODR-411-DRPlacementControl-instance.png[DRPlacementControl busybox instance]
-
-Select `busybox-placement-1-drpc` and then the YAML form. Modify the `action` to `Relocate` as shown below.
-
-.DRPlacementControl modify action to Relocate
-image:images/ODR-bos-411-DRPlacementControl-failback.png[DRPlacementControl modify action to Relocate]
-
-Select *Save*.
-
-Check if the application `busybox` is now running in the *Primary managed cluster* using the following command. The failback is to the `preferredCluster` which should be where the application was running before the failover operation.
-
-[source,role="execute"]
-----
-oc get pods,pvc -n busybox-sample
-----
-.Example output.
-----
-NAME          READY   STATUS    RESTARTS   AGE
-pod/busybox   1/1     Running   0          60s
-
-NAME                                STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS                  AGE
-persistentvolumeclaim/busybox-pvc   Bound    pvc-79f2a74d-6e2c-48fb-9ed9-666b74cfa1bb   5Gi        RWO            ocs-storagecluster-ceph-rbd   61s
-----
-
-Next, using the same command, check if `busybox` is running in the *Secondary managed cluster*. The `busybox` application should no longer be running on this managed cluster.
-
-[source,role="execute"]
-----
-oc get pods,pvc -n busybox-sample
-----
-.Example output.
-----
-No resources found in busybox-sample namespace.
-----
+Now we are ready to deploy our real life application and ensure that it failover as well as failback(relocate) successfully while maintaining persistent data consistency and availability.
