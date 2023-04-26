@@ -235,9 +235,14 @@ image:images/ACM-bos-Submariner-addon-installed.png[ACM Submariner add-ons insta
 
 == OpenShift Data Foundation Installation
 
-In order to configure storage replication between the two OCP clusters `OpenShift Data Foundation` (ODF) must be installed first on each managed cluster. ODF deployment guides and instructions are specific to your infrastructure (i.e. AWS, VMware, BM, Azure, etc.). Install ODF version *4.11* on both OCP managed clusters.
+In order to configure storage replication between the two OCP clusters `OpenShift Data Foundation` (ODF) must be installed first on each managed cluster. ODF deployment guides and instructions are specific to your infrastructure (i.e. AWS, VMware, BM, Azure, etc.). Install ODF version *4.12* on both OCP managed clusters.
 
 You can validate the successful deployment of ODF on each managed OCP cluster with the following command:
+For primary :
+[source,role="execute"]
+----
+oc login -u %primary_openshift_cluster_admin_username% -p %primary_openshift_cluster_admin_password% %primary_openshift_api_server_url%
+----
 
 [source,role="execute"]
 ----
@@ -251,15 +256,37 @@ And for the Multi-Cluster Gateway (MCG):
 oc get noobaa -n openshift-storage noobaa -o jsonpath='{.status.phase}{"\n"}'
 ----
 
-If the result is `Ready` for both queries on the *Primary managed cluster* and the *Secondary managed cluster* continue on to configuring mirroring.
+For Secondary:
+[source,role="execute"]
+----
+oc login -u %secondary_openshift_cluster_admin_username% -p %secondary_openshift_cluster_admin_password% %secondary_openshift_api_server_url%
+----
+
+[source,role="execute"]
+----
+oc get storagecluster -n openshift-storage ocs-storagecluster -o jsonpath='{.status.phase}{"\n"}'
+----
+
+And for the Multi-Cluster Gateway (MCG):
+
+[source,role="execute"]
+----
+oc get noobaa -n openshift-storage noobaa -o jsonpath='{.status.phase}{"\n"}'
+----
+
+Verify that the result is `Ready` for both queries on the *Primary managed cluster* and the *Secondary managed cluster*.
 
 NOTE: The successful installation of ODF can also be validated in the *OCP Web Console* by navigating to *Storage* and then *Data Foundation*.
 
-== Install ODF Multicluster Orchestrator Operator on Hub cluster
-
-On the *Hub cluster* navigate to *OperatorHub* and filter for `ODF Multicluster Orchestrator`. Follow instructions to *Install* the operator into the project `openshift-operators`. The `ODF Multicluster Orchestrator` also installs the `Openshift DR Hub Operator` on the ACM hub cluster as a dependency.
+== Verify ODF Multicluster Orchestrator Operator on Hub cluster
 
 Check to see the operators *Pod* are in a `Running` state. The `OpenShift DR Hub` operator will be installed at the same time in `openshift-operators`.
+
+For Hub:
+[source,role="execute"]
+----
+oc login -u %hub_openshift_cluster_admin_username% -p %hub_openshift_cluster_admin_password% %hub_openshift_api_server_url%
+----
 
 [source,role="execute"]
 ----
@@ -360,7 +387,7 @@ proxy.config.openshift.io/cluster patched
 
 == Enabling Multicluster Web Console
 
-This is a new capability that is required before creating a Data Policy or *DRPolicy*. It is only needed on the *Hub cluster* and `RHACM 2.5` must be installed.
+This is a new capability that is required before creating a Data Policy or *DRPolicy*. It is only needed on the *Hub cluster* and `RHACM 2.7` must be installed.
 
 IMPORTANT: Multicluster console is a Technology Preview feature only. Technology Preview features are not supported with Red Hat production service level agreements (SLAs) and might not be functionally complete. Red Hat does not recommend using them in production. These features provide early access to upcoming product features, enabling customers to test functionality and provide feedback during the development process.
 
