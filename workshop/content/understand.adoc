@@ -315,22 +315,16 @@ On the *Hub cluster* navigate to `All Clusters`. Then navigate to *Data policies
 
 IMPORTANT: Make sure you can access all clusters from the *Multicluster Web console*. The clusters will be directly below `All Clusters`.
 
-.Multicluster console Data policies
-image:images/MCO-create-first-drpolicy.png[Multicluster console Data policies]
-
 Click on *Data policies* and review the already created drpolicy named `drsync5m` 
 
-.DRPolicy select peer clusters 
-image:images/MCO-bos-drpolicy-selections.png[DRPolicy select peer clusters]
+.DRPolicy check
+image:images/MCO-drpolicy-selections.png[DRPolicy check]
 
-The greyed out dropdown option for `Replication policy` will automatically be selected as *async* based on the OpenShift clusters selected and a *Sync schedule* will be available. Select the replication interval for this *DRPolicy* and then select *Create*.
+Note that the `Replication policy` will automatically be selected as *async* based on the OpenShift clusters selected and a *Sync schedule* will be available. The replication interval for this dr policy is 5 minutes. You can check by clicking 3 dots on the right side of drsync5m data policy and select Edit DR Policy. Please do not update anything here, once you review the content of the yaml file, just cancel the selection so that there is no update to the DR Policy.
 
-.DRPolicy select replication interval 
-image:images/MCO-drpolicy-replication-interval.png[DRPolicy select replication interval]
+NOTE: For every desired replication interval a new *DRPolicy* needs to be created with a unique name (i.e., drsync5m). The same clusters could be selected but the *Sync schedule* would be configured with a different replication interval in minutes. The minimum is one minute.
 
-NOTE: For every desired replication interval a new *DRPolicy* needs to be created with a unique name (i.e., ocp4bos1-ocp4bos2-10m). The same clusters could be selected but the *Sync schedule* would be configured with a different replication interval in minutes. The minimum is one minute.
-
-This should create the two *DRCluster* resources and also the *DRPolicy* on the *Hub cluster*. In addition, when the initial *DRPolicy* is created the following will happen:
+Creating a new DR Policy also creates the two *DRCluster* resources and also the *DRPolicy* on the *Hub cluster*. In addition, when the initial *DRPolicy* is created the following will happen:
 
 * Create a bootstrap token and exchanges this token between the managed clusters.
 * Enable mirroring for the default `CephBlockPool` on each managed clusters.
