@@ -190,7 +190,15 @@ oc get networks.config.openshift.io cluster -o json | jq .spec
 ----
 
 For Secondary:
+[source,role="execute"]
+----
 oc login -u {secondary_openshift_cluster_admin_username} -p {secondary_openshift_cluster_admin_password} {secondary_openshift_api_server_url}
+----
+
+[source,role="execute"]
+----
+oc get networks.config.openshift.io cluster -o json | jq .spec
+----
 
 .Example output for ocp4bos2:
 [source,json]
