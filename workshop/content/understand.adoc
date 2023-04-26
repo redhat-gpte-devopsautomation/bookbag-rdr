@@ -144,17 +144,23 @@ Logon to the Hub Cluster ACM console using your OpenShift credentials.
 
 Go to the {hub_openshift_cluster_console_url}/[OpenShift
 console] and log in with your credentials username: {hub_openshift_cluster_admin_username} and password: {hub_openshift_cluster_admin_password}.
-+
+
 image:images/openshift-login.png[images/openshift-login.png]
-+
-Select All Clusters and verify that you can see local and two managed clusters - primnary and secondary
 
 === Verify Managed clusters which are imported correctly
+Select All Clusters and verify that you can see local and two managed clusters - primnary and secondary
+
 image:images/ACM-all-cluster-hub.png[images/ACM-all-cluster-hub.png]
 
 === Verify Managed clusters have non-overlapping networks
 
-In order to connect the OpenShift cluster and service networks using the `Submariner add-ons`, it is necessary to validate the two clusters have non-overlapping networks. This can be done by running the following command for each of the managed clusters.
+In order to connect the OpenShift cluster and service networks using the `Submariner add-ons`, it is necessary to validate the two clusters have non-overlapping networks. This can be done by running the following command for each of the managed clusters and check the spec section as shown below.
+
+For that you have a terminal window along with your workshop modules. You can use api login to respective cluster.
+If you want you can also ssh to each cluster separately using mutliple terminal windows outside of this browser based termninal window.
+
+For primary :
+oc login -u {primary_openshift_cluster_admin_username} -p {primary_openshift_cluster_admin_password} {primary_openshift_api_server_url}
 
 [source,role="execute"]
 ----
@@ -166,7 +172,7 @@ oc get networks.config.openshift.io cluster -o json | jq .spec
 {
   "clusterNetwork": [
     {
-      "cidr": "10.5.0.0/16",
+      "cidr": "10.128.0.0/14",
       "hostPrefix": 23
     }
   ],
@@ -175,10 +181,13 @@ oc get networks.config.openshift.io cluster -o json | jq .spec
   },
   "networkType": "OpenShiftSDN",
   "serviceNetwork": [
-    "10.15.0.0/16"
+    "172.30.0.0/16"
   ]
 }
 ----
+
+For Secondary:
+oc login -u {secondary_openshift_cluster_admin_username} -p {secondary_openshift_cluster_admin_password} {secondary_openshift_api_server_url}
 
 .Example output for ocp4bos2:
 [source,json]
@@ -186,7 +195,7 @@ oc get networks.config.openshift.io cluster -o json | jq .spec
 {
   "clusterNetwork": [
     {
-      "cidr": "10.6.0.0/16",
+      "cidr": "10.200.0.0/14",
       "hostPrefix": 23
     }
   ],
@@ -195,7 +204,7 @@ oc get networks.config.openshift.io cluster -o json | jq .spec
   },
   "networkType": "OpenShiftSDN",
   "serviceNetwork": [
-    "10.16.0.0/16"
+    "172.31.0.0/16"
   ]
 }
 ----
@@ -204,28 +213,9 @@ These outputs show that the two example managed clusters have non-overlapping `c
 
 === Connect the Managed clusters using Submariner add-ons
 
-Now that we know the `cluster` and `service` networks have non-overlapping ranges, it is time to move on to installing the `Submariner add-ons` for each managed cluster. This is done by using the ACM console and `Cluster sets`.
+Now that we know the `cluster` and `service` networks have non-overlapping ranges, it is time to verify the `Submariner add-ons` for each managed cluster. This is done by using the ACM console and `Cluster sets`.
 
 Navigate to selection shown below and at the bottom of the same page, select *Create cluster set*.
-
-.ACM Create new Cluster set
-image::ACM-Cluster-sets.png[ACM Create new Cluster set]
-
-Once the new `Cluster set` is created select *Manage resource assignments*.
-
-.ACM Cluster set created
-image::ACM-Cluster-set-created.png[ACM Cluster set created]
-
-Follow the instructions and add the two managed clusters to the new `Cluster set`. Select `Save` and then navigate to `Submariner add-ons`.
-
-.ACM Submariner add-ons
-image::ACM-Submariner-addon.png[ACM Submariner add-ons]
-
-Select *Install Submariner add-ons* at the bottom of the page and add the two managed clusters. Click through the wizard selections and make changes as needed. After `Review` of your selections select *Install*.
-
-CAUTION: Do not select *Enable Globalnet* because of overlapping `cluster` and service networks for the managed clusters. Using `Globalnet` is not supported with `Regional Disaster Recovery` currently. Ensure that `cluster` and `service` networks are non-overlapping before proceeding.
-
-IMPORTANT: It can take more than 5 minutes for the Submariner add-ons installation to finish on both managed clusters. Resources are installed in the `submariner-operator` project.
 
 A successful deployment will show `Connection status` and `Agent status` as `Healthy`.
 
