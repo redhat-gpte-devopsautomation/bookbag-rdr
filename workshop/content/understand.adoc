@@ -42,7 +42,9 @@
 
 Regional-DR is composed of Red Hat Advanced Cluster Management for Kubernetes (RHACM) and OpenShift Data Foundation components to provide application and data mobility across OpenShift Container Platform clusters. It is built on Asynchronous data replication and hence could have a potential data loss but provides the protection against a broad set of failures.
 
-Red Hat OpenShift Data Foundation is backed by Ceph as the storage provider, whose lifecycle is managed by Rook and it’s enhanced with the ability to:
+This Regional-DR solution provides an automated "one-click" recovery in the event of a regional disaster. The protected applications are automatically redeployed to a designated OpenShift Container Platform with OpenShift Data Foundation cluster that is available in another region.
+
+In this solution, Regional-DR leverages Red Hat OpenShift Data Foundation which is backed by Ceph as the storage provider, whose lifecycle is managed by Rook and it’s enhanced with the ability to:
 
 * Enable pools for mirroring.
 * Automatically mirror images across RBD pools.
@@ -59,7 +61,56 @@ NOTE: These steps are considered Tech Preview in ODF 4.12 and are provided for P
 [IMP]
 Configuring OpenShift Data Foundation for Regional-DR with Advanced Cluster Management is a Technology Preview feature and is subject to Technology Preview support limitations. Technology Preview features are not supported with Red Hat production service level agreements (SLAs) and might not be functionally complete. Red Hat does not recommend using them in production. These features provide early access to upcoming product features, enabling customers to test functionality and provide feedback during the development process.
 
-=== Steps just for understanding the implementation
+=== Regional-DR
+In this lab we will focus on Regional-DR. Regional-DR is composed of Red Hat Advanced Cluster Management for Kubernetes and OpenShift Data Foundation components to provide application and data mobility across Red Hat OpenShift Container Platform clusters
+
+=== Components of Regional-DR solution
+
+==== Red Hat Advanced Cluster Management for Kubernetes
+Red Hat Advanced Cluster Management (RHACM))provides the ability to manage multiple clusters and application lifecycles. Hence, it serves as a control plane in a multi-cluster environment.
+
+RHACM is split into two parts:
+
+* RHACM Hub: includes components that run on the multi-cluster control plane.
+* Managed clusters: includes components that run on the clusters that are managed.
+
+==== OpenShift Data Foundation
+OpenShift Data Foundation provides the ability to provision and manage storage for stateful applications in an OpenShift Container Platform cluster.
+
+OpenShift Data Foundation is backed by Ceph as the storage provider, whose lifecycle is managed by Rook in the OpenShift Data Foundation component stack. Ceph-CSI provides the provisioning and management of Persistent Volumes for stateful applications.
+
+OpenShift Data Foundation stack is now enhanced with the following abilities for disaster recovery:
+
+* Enable RBD block pools for mirroring across OpenShift Data Foundation instances (clusters)
+* Ability to mirror specific images within an RBD block pool
+* Provides csi-addons to manage per Persistent Volume Claim (PVC) mirroring
+
+==== OpenShift DR
+OpenShift DR is a set of orchestrators to configure and manage stateful applications across a set of peer OpenShift clusters which are managed using RHACM and provides cloud-native interfaces to orchestrate the life-cycle of an application’s state on Persistent Volumes. These include:
+
+* Protecting an application and its state relationship across OpenShift clusters
+* Failing over an application and its state to a peer cluster
+* Relocate an application and its state to the previously deployed cluster
+
+OpenShift DR is split into three components:
+
+* ODF Multicluster Orchestrator: Installed on the multi-cluster control plane (RHACM Hub), it orchestrates configuration and peering of OpenShift Data Foundation clusters for Metro and Regional DR relationships
+* OpenShift DR Hub Operator: Automatically installed as part of ODF Multicluster Orchestrator installation on the hub cluster to orchestrate failover or relocation of DR enabled applications.
+* OpenShift DR Cluster Operator: Automatically installed on each managed cluster that is part of a Metro and Regional DR relationship to manage the lifecycle of all PVCs of an application.
+
+=== Regional-DR deployment workflow 
+[NOTE] 
+Already implemented when this environment was provisioned. Here its mentioned for your understanding and exploration.
+
+This section provides an overview of the steps required to configure and deploy Regional-DR capabilities using latest version of Red Hat OpenShift Data Foundation across two distinct OpenShift Container Platform clusters. In addition to two managed clusters, a third OpenShift Container Platform cluster will be required to deploy the Red Hat Advanced Cluster Management (RHACM)
+
+This installation method requires you have three OpenShift clusters that have network reachability between them. For the purposes of this document we will use this reference for the clusters:
+
+* *Hub cluster* is where ACM, ODF Multisite-orchestrator and ODR Hub controllers are installed.
+* *Primary managed cluster* is where ODF, ODR Cluster controller, and Applications are installed.
+* *Secondary managed cluster* is where ODF, ODR Cluster controller, and Applications are installed.
+
+=== Steps just for understanding the implementation workflow
 These steps are already executed for you during the lab setup except for the application onboarding which is the next lab.
 
 [start=1]
@@ -71,28 +122,21 @@ Import or create the two managed clusters with adequate resources for ODF (compu
 Ensure the primary and secondary OCP clusters have unique private network address ranges.
 . *Connect the private networks using Submariner add-ons.* +
 Connect the managed OCP private networks (cluster and service) using the RHACM Submariner add-ons.
-. *Install ODF 4.10 on managed clusters.* +
+. *Install ODF 4.12 on managed clusters.* +
 Install ODF 4.12 on primary and secondary OCP managed clusters and validate deployment.
 . *Install ODF Multicluster Orchestrator on the ACM hub cluster.* +
 Install from OperatorHub on the ACM hub cluster the ODF Multicluster Orchestrator. The OpenShift DR Hub operator will also be installed.
 . *Configure SSL access between S3 endpoints* +
 If managed OpenShift clusters are not using valid certificates this step must be done by creating a new user-ca-bundle ConfigMap that contains the certs.
-. *Enable Multicluster Web Console.* +
-This is a new Tech Preview capability that is required before creating a DRPolicy. It is only needed on the Hub cluster where ACM resides.
 . *Create one or more DRPolicy* +
 Use the All Clusters Data Services UI to create DRPolicy by selecting the two managed clusters the policy will apply to. 
 . *Validate OpenShift DR Cluster operators are installed.* +
 Once the first DRPolicy is created this will trigger the DR Cluster operators to be created on the two managed clusters selected in the UI.
+. *Following this we can setup an application using RHACM console and test failover/relocate.*
+* Create an application using RHACM console for highly available application across regions.
+* Test failover and reolcate operations using the sampole appklication between managed clusters.
 
-== Deploy and Configure ACM for Multisite connectivity
-
-This installation method requires you have three OpenShift clusters that have network reachability between them. For the purposes of this document we will use this reference for the clusters:
-
-* *Hub cluster* is where ACM, ODF Multisite-orchestrator and ODR Hub controllers are installed.
-* *Primary managed cluster* is where ODF, ODR Cluster controller, and Applications are installed.
-* *Secondary managed cluster* is where ODF, ODR Cluster controller, and Applications are installed.
-
-=== Review ACM and MultiClusterHub
+=== Review the implementation
 
 Logon to the Hub Cluster ACM console using your OpenShift credentials.
 
@@ -115,12 +159,7 @@ After logging in you should see your local cluster imported.
 .ACM local cluster imported
 image::ACM-local-cluster-import.png[ACM local cluster imported]
 
-=== Import or Create Managed clusters
-
-Now that ACM is installed on the `Hub cluster` it is time to either create or import the `Primary managed cluster` and the `Secondary managed cluster`. You should see selections (as in above diagram) for *Create cluster* and *Import cluster*. Chose the selection appropriate for your environment. After the managed clusters are successfully created or imported you should see something similar to below.
-
-.ACM managed cluster imported
-image::ACM-bos-managed-clusters-import.png[ACM managed cluster imported]
+=== Verify Managed clusters which are imported correctly
 
 === Verify Managed clusters have non-overlapping networks
 
