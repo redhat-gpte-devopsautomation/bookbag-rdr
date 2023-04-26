@@ -398,7 +398,31 @@ Succeeded
 
 NOTE: Make sure to run command for both *DRClusters* on the *Hub cluster*.
 
-To validate that the `OpenShift DR Cluster` operator installation was successful on the *Primary managed cluster* and the *Secondary managed cluster* do the following command:
+To validate that the `OpenShift DR Cluster` operator installation was successful on the *Primary managed cluster* and the *Secondary managed cluster* check for CSV `odr-cluster-operator` and pod `ramen-dr-cluster-operator` by running the following command:
+
+For primary :
+[source,role="execute"]
+----
+oc login -u %primary_openshift_cluster_admin_username% -p %primary_openshift_cluster_admin_password% %primary_openshift_api_server_url%
+----
+[source,role="execute"]
+----
+oc get csv,pod -n openshift-dr-system
+----
+.Example output.
+----
+NAME                                                                      DISPLAY                         VERSION   REPLACES   PHASE
+clusterserviceversion.operators.coreos.com/odr-cluster-operator.v4.11.0   Openshift DR Cluster Operator   4.11.0               Succeeded
+
+NAME                                             READY   STATUS    RESTARTS   AGE
+pod/ramen-dr-cluster-operator-5564f9d669-f6lbc   2/2     Running   0          5m32s
+----
+
+For Secondary:
+[source,role="execute"]
+----
+oc login -u %secondary_openshift_cluster_admin_username% -p %secondary_openshift_cluster_admin_password% %secondary_openshift_api_server_url%
+----
 
 [source,role="execute"]
 ----
