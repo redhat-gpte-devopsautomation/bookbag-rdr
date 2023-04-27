@@ -45,7 +45,7 @@ Modify the application DRPlacementControl resource on the Hub Cluster, add the a
 Modify the application DRPlacementControl resource on the Hub Cluster and change the action to Relocate to trigger a failback to the preferredCluster.
 
 [arabic]
-. Now you know how the DR works and how you can achieve Business Continuity for your application. Lets puts things to action now with troubleshooting an issue we have for an already configured sample application.
+. Now you know how the DR works and how you can achieve Business Continuity for your application. Lets puts this learning to action now and configure a sample application for DR.
 +
 . Your task is to onboard the sample application from https://github.com/RamenDR/ocm-ramen-samples/tree/main/busybox-odr
   Ensure that its running on primary, test for failover onto secondary and relocate (failback) to primary. Just to simplify for you there is already a    
