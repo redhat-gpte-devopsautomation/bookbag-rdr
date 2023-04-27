@@ -29,6 +29,7 @@
 :secondary_bastion_ssh_password: %secondary_bastion_ssh_password
 :secondary_ssh_command: %secondary_ssh_command%
 
+== OnBoard a sample application and make it DR Ready. Test
 
 === Create Application On Primary
 
