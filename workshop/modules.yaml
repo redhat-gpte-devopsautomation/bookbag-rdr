@@ -16,7 +16,7 @@ modules:
     name: Relocate Application To Primary
     exit_sign: Continue
   fix:
-    name: Fix a Sample Application for Disaster Recovery
+    name: Onbaord a Sample Application for Disaster Recovery on your own
     exit_sign: Continue
   review:
     name: Review
