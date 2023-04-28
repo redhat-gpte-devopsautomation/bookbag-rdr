@@ -38,7 +38,7 @@ oc login -u %secondary_openshift_cluster_admin_username% -p %secondary_openshift
 +
 . You are again going to make an update to the price of the Quarkus T-shirt.  Update the price by running the below commands:
 +
-[source, execute]
+[source,role="execute"]
 ----
 oc login -u %secondary_openshift_cluster_admin_username% -p %secondary_openshift_cluster_admin_password% %secondary_openshift_api_server_url%
 POD=$(oc get pods -n globex | grep catalog-database | awk '{print $1}')

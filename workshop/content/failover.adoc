@@ -37,7 +37,7 @@ oc login -u {primary_openshift_cluster_admin_username} -p {primary_openshift_clu
 +
 . You are now going to make an update to the price of one of the globex store items.  This data is stored in a postgres database attached to a PVC which we will preserve during the failover.  Update the price by running the below commands:
 +
-[source, execute]
+[source,role="execute"]
 ----
 oc login -u %primary_openshift_cluster_admin_username% -p %primary_openshift_cluster_admin_password% %primary_openshift_api_server_url%
 POD=$(oc get pods -n globex | grep catalog-database | awk '{print $1}')
@@ -65,7 +65,7 @@ oc login -u {secondary_openshift_cluster_admin_username} -p {secondary_openshift
 +
 . You will now need to create the *globex* namespace in the secondary cluster and annotate it with the globex subscription name.
 +
-[source, execute]
+[source,role="execute"]
 ----
 oc login -u %secondary_openshift_cluster_admin_username% -p %secondary_openshift_cluster_admin_password% %secondary_openshift_api_server_url%
 oc new-project globex || oc project globex
