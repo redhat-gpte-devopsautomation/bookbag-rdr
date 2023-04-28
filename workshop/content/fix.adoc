@@ -48,7 +48,8 @@ Modify the application DRPlacementControl resource on the Hub Cluster and change
 Lets puts this learning to action now and configure a sample application for DR. Use the above steps to setup busybox applicaiton in a new namespace called busybox-test
 
 . Your task is to onboard the sample application from https://github.com/RamenDR/ocm-ramen-samples/tree/main/busybox-odr
-  Ensure that its running on primary, test for failover onto secondary and relocate (failback) to primary. Just to simplify for you there is already a
+. Ensure that its running on primary, test for failover onto secondary and relocate (failback) to primary.
+. Just to simplify for you there is already a
   busybox namespace with this app running and configured for Regional DR, so that you can replicate something similar in another namespace.
 
   [NOTE] You need to onboard same sample application in a different namespace.
