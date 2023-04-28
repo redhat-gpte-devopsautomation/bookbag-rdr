@@ -137,3 +137,5 @@ NAME                 STATUS   VOLUME                                     CAPACIT
 catalog-database     Bound    pvc-faae1a1e-4476-4052-9461-bb7e495b5903   5Gi        RWO            ocs-storagecluster-ceph-rbd   18m
 inventory-database   Bound    pvc-fda1a2a3-cb5a-495d-b9c0-47ab95bba2c7   5Gi        RWO            ocs-storagecluster-ceph-rbd   18m
 ----
+
+[NOTE] For production environment or real life scenario, the applications routes will be updated in Global Load Balancer using automated way for e.g. using ansible to update GLB's with the new updated routes post failover / relocate.
