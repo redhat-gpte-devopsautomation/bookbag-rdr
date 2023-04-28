@@ -37,17 +37,18 @@ oc login -u {primary_openshift_cluster_admin_username} -p {primary_openshift_clu
 +
 . You are now going to make an update to the price of one of the globex store items.  This data is stored in a postgres database attached to a PVC which we will preserve during the failover.  Update the price by running the below commands:
 +
-[source, bash]
+[source, execute]
 ----
+oc login -u %primary_openshift_cluster_admin_username% -p %primary_openshift_cluster_admin_password% %primary_openshift_api_server_url%
 POD=$(oc get pods -n globex | grep catalog-database | awk '{print $1}')
-oc exec -it pod/$POD -n globex -- psql --dbname catalog --command "update catalog set price = 15 where name = 'Quarkus T-shirt';"
+oc exec -it $POD -n globex -- psql --dbname catalog --command "update catalog set price = 15 where name = 'Quarkus T-shirt';"
 ----
 +
 . Switch back to the Globex application and refresh the page.  Select the last page (6) and notice that the price of the Quarkust T-shirt is now *$15.00*
 +
 image:images/primary-globex-item-updated.png[images/primary-globex-item-updated.png]
 +
-. Return to the RHACM console and then click *Data Services->Data policies* from the left menu.
+. Return to the RHACM Hub console and then click *Data Services->Data policies* from the left menu.
 +
 image:images/rhacm-data-policies.png[images/rhacm-data-policies.png]
 +
@@ -64,8 +65,9 @@ oc login -u {secondary_openshift_cluster_admin_username} -p {secondary_openshift
 +
 . You will now need to create the *globex* namespace in the secondary cluster and annotate it with the globex subscription name.
 +
-[source, bash]
+[source, execute]
 ----
+oc login -u %secondary_openshift_cluster_admin_username% -p %secondary_openshift_cluster_admin_password% %secondary_openshift_api_server_url%
 oc new-project globex || oc project globex
 oc annotate ns globex --overwrite=true apps.open-cluster-management.io/hosting-subscription=globex/globex-subscription-1
 ----

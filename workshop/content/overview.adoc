@@ -37,9 +37,9 @@ Organizations running critical applications on Red Hat OpenShift Container Platf
 
 Disaster recovery (DR) helps an organization to recover and resume business critical functions or normal operations when there are disruptions or disasters.
 
-In the hands on lab you will understand the nuances of how to setup an application to continue during a disaster and recovered on another site/cluster. We will use a real life e-retailer application for a fictitious company called Globex selling goods online. You will learn how to Deploy and setup this application for business continuity. 
-Further, we will test the data persistency across failover/failback scenarios by updating the data in the database. Verify that the data is consistent and available after transition from one site/cluster to another.
-Finally, we onboard a sample application to be part of Disaster Recovery strategy and test failover/relocate(failback).This time without any guided information to test your understanding. 
+In the hands on lab you will understand the nuances of how to setup an application to continue during a disaster and recovered on another site/cluster. We will use a real life e-retailer application for a fictitious company called Globex selling goods online. You will learn how to Deploy and setup this application for business continuity.
+Further, we will test the data persistency across failover/relocate(failback) scenarios by updating the data in the database. Verify that the data is consistent and available after transition from one site/cluster to another.
+Finally, we onboard a sample application to be part of Disaster Recovery strategy and test failover/relocate(failback).This time without any guided information to test your understanding.
 
 == Intro
 
@@ -60,7 +60,7 @@ Read the instructions carefully before you execute the commands. There are multi
 
 The lab consists of three Red Hat OpenShift Clusters.
 
-* Hub Cluster 
+* Hub Cluster
 * Primary Cluster
 * Secondary Cluster
 
@@ -69,7 +69,7 @@ You can access your Hub environment bastion server as {hub_bastion_ssh_user_name
 ssh {hub_bastion_ssh_user_name}@{hub_bastion_public_hostname}
 
 === Workshop Information
-The lab guide here will be your friend to follow through the lab. 
+The lab guide here will be your friend to follow through the lab.
 Incase you want to explore more, the following information would be userful.
 
 Informational messages generated for your workshop below can be used to access the respective Cluster's :
@@ -124,4 +124,3 @@ Secondary Cluster bastion ssh password - {secondary_bastion_ssh_user_name}
 Secondary Cluster bastion ssh username - {secondary_bastion_ssh_password}
 
 Secondary Cluster ssh command information - {secondary_ssh_command}
-
