@@ -40,6 +40,10 @@ oc login -u {primary_openshift_cluster_admin_username} -p {primary_openshift_clu
 [source,role="execute"]
 ----
 oc login -u %primary_openshift_cluster_admin_username% -p %primary_openshift_cluster_admin_password% %primary_openshift_api_server_url%
+----
++
+[source,role="execute"]
+----
 POD=$(oc get pods -n globex | grep catalog-database | awk '{print $1}')
 oc exec -it $POD -n globex -- psql --dbname catalog --command "update catalog set price = 15 where name = 'Quarkus T-shirt';"
 ----
@@ -68,6 +72,10 @@ oc login -u {secondary_openshift_cluster_admin_username} -p {secondary_openshift
 [source,role="execute"]
 ----
 oc login -u %secondary_openshift_cluster_admin_username% -p %secondary_openshift_cluster_admin_password% %secondary_openshift_api_server_url%
+----
++
+[source,role="execute"]
+----
 oc new-project globex || oc project globex
 oc annotate ns globex --overwrite=true apps.open-cluster-management.io/hosting-subscription=globex/globex-subscription-1
 ----
