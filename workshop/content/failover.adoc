@@ -93,9 +93,35 @@ image:images/rhacm-failover-application.png[images/rhacm-failover-application.pn
 +
 NOTE: The subscription group may not be in a ready state to select.  Wait a few minutes and try again.
 .. Click *Initiate*
-. You will notice that the pods on the primary cluster in the *globex* namespace will start terminating as the app starts failing over.
+. You will notice that the pods on the primary cluster in the *globex* namespace will start terminating as the app starts failing over. Also check that the PVC will be in terminating state as well. Ensure that PVC is terminated and not visible on the primary.
 +
 image:images/primary-pods-terminated.png[images/primary-pods-terminated.png]
++
+Review the status of the pvc (terminating) and the cephblockpool on primary. The health may be temporary in warning state and then goes back to healthy state:
+[source,role="execute"]
+----
+oc login -u %primary_openshift_cluster_admin_username% -p %primary_openshift_cluster_admin_password% %primary_openshift_api_server_url%
+----
++
+[source,role="execute"]
+----
+oc get cephblockpool ocs-storagecluster-cephblockpool -n openshift-storage -o jsonpath='{.status.mirroringStatus.summary}{"\n"}'
+----
+.Example output.
+----
+map[daemon_health:OK health:OK image_health:OK states:map[replaying:2]]
+----
++
+[source,role="execute"]
+----
+oc get pvc -n globex
+----
+.Example output.
+----
+NAME                 STATUS        VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS                  AGE
+catalog-database     Terminating   pvc-faae1a1e-4476-4052-9461-bb7e495b5903   5Gi        RWO            ocs-storagecluster-ceph-rbd   45m
+inventory-database   Terminating   pvc-fda1a2a3-cb5a-495d-b9c0-47ab95bba2c7   5Gi        RWO            ocs-storagecluster-ceph-rbd   45m
+----
 +
 . Open another browser window and login to the *secondary* cluster link:{secondary_openshift_cluster_console_url}[Secondary Cluster OpenShift console] and log in with your credentials username: {secondary_openshift_cluster_admin_username} and password: {secondary_openshift_cluster_admin_password}.
 +
@@ -116,3 +142,29 @@ image:images/primary-globex-landing.png[images/primary-globex-landing.png]
 . Select the last page (6) and notice that the price of the Quarkust T-shirt is *$15.00*.  Our data from the primary cluster has been preserved during the failover.
 +
 image:images/secondary-price-preserved.png[images/secondary-price-preserved.png]
++
+Review the status of the pvc and the cephblockpool on secondary. The health may be temporary in warning state and then goes back to healthy state. You may also see `states:map[replaying:2]`:
+[source,role="execute"]
+----
+oc login -u %secondary_openshift_cluster_admin_username% -p %secondary_openshift_cluster_admin_password% %secondary_openshift_api_server_url%
+----
++
+[source,role="execute"]
+----
+oc get cephblockpool ocs-storagecluster-cephblockpool -n openshift-storage -o jsonpath='{.status.mirroringStatus.summary}{"\n"}'
+----
+.Example output.
+----
+map[daemon_health:OK health:OK image_health:OK states:map[replaying:2]]
+----
++
+[source,role="execute"]
+----
+oc get pvc -n globex
+----
+.Example output.
+----
+NAME                 STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS                  AGE
+catalog-database     Bound    pvc-faae1a1e-4476-4052-9461-bb7e495b5903   5Gi        RWO            ocs-storagecluster-ceph-rbd   15m
+inventory-database   Bound    pvc-fda1a2a3-cb5a-495d-b9c0-47ab95bba2c7   5Gi        RWO            ocs-storagecluster-ceph-rbd   15m
+----

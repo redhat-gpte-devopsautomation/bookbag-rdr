@@ -70,6 +70,32 @@ NOTE: The subscription group may not be in a ready state to select.  Wait a few 
 +
 image:images/secondary-pods-terminated.png[images/secondary-pods-terminated.png]
 +
+Review the status of the pvc and the cephblockpool on secondary. The health may be temporary in warning state and then goes back to healthy state. You may also see `states:map[replaying:2]`:
+[source,role="execute"]
+----
+oc login -u %secondary_openshift_cluster_admin_username% -p %secondary_openshift_cluster_admin_password% %secondary_openshift_api_server_url%
+----
++
+[source,role="execute"]
+----
+oc get cephblockpool ocs-storagecluster-cephblockpool -n openshift-storage -o jsonpath='{.status.mirroringStatus.summary}{"\n"}'
+----
+.Example output.
+----
+map[daemon_health:OK health:OK image_health:OK states:map[replaying:2]]
+----
++
+[source,role="execute"]
+----
+oc get pvc -n globex
+----
+.Example output.
+----
+NAME                 STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS                  AGE
+catalog-database     Terminating    pvc-faae1a1e-4476-4052-9461-bb7e495b5903   5Gi        RWO            ocs-storagecluster-ceph-rbd   45m
+inventory-database   Terminating    pvc-fda1a2a3-cb5a-495d-b9c0-47ab95bba2c7   5Gi        RWO            ocs-storagecluster-ceph-rbd   45m
+----
++
 . Switch to the *primary* cluster console and click *Workloads->Pods* on the left menu.  Ensure your selected project is *globex*.  Notice that the application pods have been recreated in this namespace.
 +
 image:images/primary-pods-created.png[images/primary-pods-created.png]
@@ -85,3 +111,29 @@ image:images/primary-globex-landing.png[images/primary-globex-landing.png]
 . Select the last page (6) and notice that the price of the Quarkust T-shirt is still *$20.00*.
 +
 image:images/secondary-price-updated.png[images/secondary-price-updated.png]
++
+Review the status of the pvc (terminating) and the cephblockpool on primary. The health may be temporary in warning state and then goes back to healthy state:
+[source,role="execute"]
+----
+oc login -u %primary_openshift_cluster_admin_username% -p %primary_openshift_cluster_admin_password% %primary_openshift_api_server_url%
+----
++
+[source,role="execute"]
+----
+oc get cephblockpool ocs-storagecluster-cephblockpool -n openshift-storage -o jsonpath='{.status.mirroringStatus.summary}{"\n"}'
+----
+.Example output.
+----
+map[daemon_health:OK health:OK image_health:OK states:map[replaying:2]]
+----
++
+[source,role="execute"]
+----
+oc get pvc -n globex
+----
+.Example output.
+----
+NAME                 STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS                  AGE
+catalog-database     Bound    pvc-faae1a1e-4476-4052-9461-bb7e495b5903   5Gi        RWO            ocs-storagecluster-ceph-rbd   18m
+inventory-database   Bound    pvc-fda1a2a3-cb5a-495d-b9c0-47ab95bba2c7   5Gi        RWO            ocs-storagecluster-ceph-rbd   18m
+----
