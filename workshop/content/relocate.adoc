@@ -41,6 +41,10 @@ oc login -u %secondary_openshift_cluster_admin_username% -p %secondary_openshift
 [source,role="execute"]
 ----
 oc login -u %secondary_openshift_cluster_admin_username% -p %secondary_openshift_cluster_admin_password% %secondary_openshift_api_server_url%
+----
++
+[source,role="execute"]
+----
 POD=$(oc get pods -n globex | grep catalog-database | awk '{print $1}')
 oc exec -it $POD -n globex -- psql --dbname catalog --command "update catalog set price = 20 where name = 'Quarkus T-shirt';"
 ----
