@@ -47,7 +47,7 @@ In this workshop, you will learn how to achieve Business Continuity for your app
 
 The lab is divided into 5 main sections (expecting 15 minutes per section, last section may take more or less time depending on how comfortable you are with the previous section understanding):
 
-* Understand the Implementation spects of the environment.
+* Understand the Implementation aspects of the environment.
 * Deploy Globex Application on Primary.
 * Failover Globex Application on Secondary.
 * Relocate Application to Primary (FailBack).
