@@ -34,7 +34,7 @@
 === Task Goal
 
 . *Create the Sample Application using ACM console.* +
-Use the sample app example from %hub_gitea_console_url%/dev-user/busybox-app.git to create a deployment in busybox-app namespace for failover and failback testing. This is your own git repo where you can edit and change whatever you need to get the app deployed and works with DR. You can login to this repo with `dev-user` as the username and `openshif` as the password.
+Use the sample app example from %hub_gitea_console_url%/dev-user/busybox-app.git to create a deployment in busybox-app namespace for failover and failback testing. This is your own git repo where you can edit and change whatever you need to get the app deployed and works with DR. You can login to this repo with `dev-user` as the username and `openshif` as the password to update the repo contents.
 [HINT]
 gitea repo - busybox and busybox-example to busybox-app
 . *Validate Sample Application deployment.* +
@@ -58,7 +58,8 @@ Use the above steps to setup busybox applicaiton in a new namespace called busyb
 . Just to simplify for you there is already a
   busybox namespace with this app running and configured for Regional DR, so that you can replicate something similar in another namespace.
 
-  [NOTE] You need to onboard same sample application in a different namespace.
+  [NOTE] 
+  You need to onboard this sample application in a different namespace called `busybox-app`.
 
 ==== Solution 
 (To be reviewed only if you are stuck for longer than 5 mints and want some hints) : https://github.com/redhat-gpte-devopsautomation/busybox-app.git
