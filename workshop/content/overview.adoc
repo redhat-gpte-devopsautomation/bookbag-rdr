@@ -68,6 +68,9 @@ You can access your Hub environment bastion server as {hub_bastion_ssh_user_name
 
 ssh {hub_bastion_ssh_user_name}@{hub_bastion_public_hostname}
 
+[NOTE]
+You can use the terminal window on the right side for command line access. For Console UI, kindly open a browser link and open the link there. Do not use the Console tab on the right side of your lab instruction link for this lab.
+
 === Workshop Information
 The lab guide here will be your friend to follow through the lab.
 Incase you want to explore more, the following information would be userful.
