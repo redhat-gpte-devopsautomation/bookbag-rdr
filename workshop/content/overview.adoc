@@ -85,7 +85,7 @@ Hub Cluster API URL - link:{hub_openshift_api_server_url}[OpenShift Hub Console 
 
 Hub Cluster Cluster Console URL - link:{hub_openshift_cluster_console_url}[OpenShift Hub Console URL]
 
-Hub Cluster admin - {hub_openshift_cluster_admin_username:}
+Hub Cluster admin - {hub_openshift_cluster_admin_username}
 
 Hub Cluster admin password - {hub_openshift_cluster_admin_password}
 
