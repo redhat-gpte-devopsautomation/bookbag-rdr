@@ -178,4 +178,4 @@ inventory-database   Bound    pvc-fda1a2a3-cb5a-495d-b9c0-47ab95bba2c7   5Gi    
 ----
 
 [NOTE] 
-Generally there will be Global Load Balancers being auto updated with the new routes post failover/relocate using automated tool like Ansible.  
+For production environment or real life scenario, the applications routes will be updated in Global Load Balancer using automated way for e.g. using ansible to update GLB's with the new updated routes post failover / relocate.
