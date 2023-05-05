@@ -159,6 +159,7 @@ oc login -u %secondary_openshift_cluster_admin_username% -p %secondary_openshift
 ----
 oc get cephblockpool ocs-storagecluster-cephblockpool -n openshift-storage -o jsonpath='{.status.mirroringStatus.summary}{"\n"}'
 ----
++
 .Example output.
 ----
 map[daemon_health:OK health:OK image_health:OK states:map[replaying:2]]
@@ -175,3 +176,6 @@ NAME                 STATUS   VOLUME                                     CAPACIT
 catalog-database     Bound    pvc-faae1a1e-4476-4052-9461-bb7e495b5903   5Gi        RWO            ocs-storagecluster-ceph-rbd   15m
 inventory-database   Bound    pvc-fda1a2a3-cb5a-495d-b9c0-47ab95bba2c7   5Gi        RWO            ocs-storagecluster-ceph-rbd   15m
 ----
+
+[NOTE] 
+Generally there will be Global Load Balancers being auto updated with the new routes post failover/relocate using automated tool like Ansible.  
