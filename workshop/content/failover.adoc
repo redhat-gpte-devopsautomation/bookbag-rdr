@@ -108,6 +108,7 @@ oc login -u %primary_openshift_cluster_admin_username% -p %primary_openshift_clu
 ----
 oc get cephblockpool ocs-storagecluster-cephblockpool -n openshift-storage -o jsonpath='{.status.mirroringStatus.summary}{"\n"}'
 ----
++
 .Example output.
 ----
 map[daemon_health:OK health:OK image_health:OK states:map[replaying:2]]
@@ -119,6 +120,7 @@ map[daemon_health:OK health:OK image_health:OK states:map[replaying:2]]
 ----
 oc get pvc -n globex
 ----
++
 .Example output.
 ----
 NAME                 STATUS        VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS                  AGE
@@ -166,6 +168,7 @@ map[daemon_health:OK health:OK image_health:OK states:map[replaying:2]]
 ----
 oc get pvc -n globex
 ----
++
 .Example output.
 ----
 NAME                 STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS                  AGE
