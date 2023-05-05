@@ -159,9 +159,6 @@ In order to connect the OpenShift cluster and service networks using the `Submar
 For that you have a terminal window along with your workshop modules. You can use api login to respective cluster.
 If you want you can also ssh to each cluster separately using mutliple terminal windows outside of this browser based termninal window.
 
-[NOTE]
-Since this is lab environment the api connection is insecured. Please accept the same in your lab when prompted. For production scenarios the api connection is expected to be secured.
-
 For primary :
 [source,role="execute"]
 ----
