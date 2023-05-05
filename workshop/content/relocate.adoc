@@ -99,7 +99,7 @@ catalog-database     Terminating    pvc-faae1a1e-4476-4052-9461-bb7e495b5903   5
 inventory-database   Terminating    pvc-fda1a2a3-cb5a-495d-b9c0-47ab95bba2c7   5Gi        RWO            ocs-storagecluster-ceph-rbd   45m
 ----
 +
-. Switch to the *primary* cluster console and click *Workloads->Pods* on the left menu.  Ensure your selected project is *globex*.  Notice that the application pods have been recreated in this namespace.
+. Switch to the *primary* cluster console and click *Workloads->Pods* on the left menu.  Ensure your selected project is *globex*.  Notice that the application pods have been recreated in this namespace. You will see the pods in primary once all the pvc's complete termination in secondary cluster.
 +
 image:images/primary-pods-created.png[images/primary-pods-created.png]
 +
