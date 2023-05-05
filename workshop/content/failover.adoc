@@ -113,6 +113,8 @@ oc get cephblockpool ocs-storagecluster-cephblockpool -n openshift-storage -o js
 map[daemon_health:OK health:OK image_health:OK states:map[replaying:2]]
 ----
 +
+. Check the pvc's (persistent volumen claims)
++
 [source,role="execute"]
 ----
 oc get pvc -n globex
