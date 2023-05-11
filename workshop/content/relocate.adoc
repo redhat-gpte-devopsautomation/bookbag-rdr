@@ -26,7 +26,7 @@
 :secondary_openshift_cluster_admin_password: %secondary_openshift_cluster_admin_password%
 :secondary_bastion_public_hostname: %secondary_bastion_public_hostname%
 :secondary_bastion_ssh_user_name: %secondary_bastion_ssh_user_name%
-:secondary_bastion_ssh_password: %secondary_bastion_ssh_password
+:secondary_bastion_ssh_password: %secondary_bastion_ssh_password%
 :secondary_ssh_command: %secondary_ssh_command%
 
 === Relocate Application To Primary

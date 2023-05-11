@@ -228,12 +228,11 @@ Now that we know the `cluster` and `service` networks have non-overlapping range
 
 Logon to the Hub Cluster ACM console using your OpenShift credentials. 
 
-Go to the {hub_openshift_cluster_console_url}/[OpenShift
-console] and log in with your credentials username: {hub_openshift_cluster_admin_username} and password: {hub_openshift_cluster_admin_password}
+Go to the *{hub_openshift_cluster_console_url}/[OpenShift console]* and log in with your credentials username: *{hub_openshift_cluster_admin_username}* and password: *{hub_openshift_cluster_admin_password}*
 
 image:images/openshift-login.png[images/openshift-login.png]
 
-Navigate to `clusterset1`. A successful deployment will show `Connection status` and `Agent status` as `Healthy`.
+Navigate to `ALL CLUSTERS`, `InfraSturcture`, `Clusters`, Select `Cluster Sets` tab and then select `clusterset1` and `Submariner add-ons` tab. A successful deployment will show `Connection status` and `Agent status` as `Healthy` for both `primary` and `secondary`.
 
 .ACM Submariner add-ons installed
 image:images/ACM-Submariner-addon-installed.png[ACM Submariner add-ons installed]
