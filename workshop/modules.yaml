@@ -1,22 +1,22 @@
 ---
 modules:
   overview:
-    name: Overview
+    name: 1. Overview
     exit_sign: Continue
   understand:
-    name: Understand the Implementation
+    name: 2. Understand the Implementation
     exit_sign: Continue
   create_application:
-    name: Create Application On Primary
+    name: 3. Create Application On Primary
     exit_sign: Continue
   failover:
-    name: Failover Application To Secondary
+    name: 4. Failover Application To Secondary
     exit_sign: Continue
   relocate:
-    name: Relocate Application To Primary
+    name: 5. Relocate Application To Primary
     exit_sign: Continue
   fix:
-    name: Onboard a Sample Application for Disaster Recovery on your own
+    name: 6. Onboard a Sample Application for Disaster Recovery on your own
     exit_sign: Continue
   review:
-    name: Review
+    name: 7. Review
