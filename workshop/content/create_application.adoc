@@ -146,7 +146,7 @@ The app is focused on catalog, inventor and UI.
 image::images/rhacm-helm-release.png["Helm Release for Globex"]
 +
 . Open another browser window and login to the *primary* cluster {primary_openshift_cluster_console_url}/[Primary OpenShift
-console] and log in with your credentials username: {primary_openshift_cluster_admin_username}and password: {primary_openshift_cluster_admin_password}.
+console] and log in with your credentials username: {primary_openshift_cluster_admin_username} and password: {primary_openshift_cluster_admin_password}.
 +
 image:images/openshift-login.png[images/openshift-login.png]
 +
