@@ -140,7 +140,7 @@ Once the first DRPolicy is created this will trigger the DR Cluster operators to
 
 Lets start by reviewing the implementation and ensuring that everything is working fine so that we can deploy an application onto OpenShift and achieve Business Continuity leveraging Regional-DR.
 
-Logon to the Hub Cluster ACM console using your OpenShift credentials. 
+Logon to the Hub Cluster ACM console using your OpenShift credentials. Ensure that you use `htpasswd_provide` to login to OpenShift Console across all cluster's for all the lab modules.
 
 Go to the {hub_openshift_cluster_console_url}/[OpenShift
 console] and log in with your credentials username: {hub_openshift_cluster_admin_username} and password: {hub_openshift_cluster_admin_password}
@@ -232,7 +232,7 @@ Go to the *{hub_openshift_cluster_console_url}/[OpenShift console]* and log in w
 
 image:images/openshift-login.png[images/openshift-login.png]
 
-Navigate to `ALL CLUSTERS`, `InfraSturcture`, `Clusters`, Select `Cluster Sets` tab and then select `clusterset1` and `Submariner add-ons` tab. A successful deployment will show `Connection status` and `Agent status` as `Healthy` for both `primary` and `secondary`.
+Navigate and Click `ALL CLUSTERS`, then go to `InfraSturcture`, `Clusters`, select `Cluster Sets` tab and in cluster sets select `clusterset1` and `Submariner add-ons` tab. A successful deployment will show `Connection status` and `Agent status` as `Healthy` for both `primary` and `secondary`.
 
 .ACM Submariner add-ons installed
 image:images/ACM-Submariner-addon-installed.png[ACM Submariner add-ons installed]
