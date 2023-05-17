@@ -37,7 +37,7 @@ Organizations running critical applications on Red Hat OpenShift Container Platf
 
 Disaster recovery (DR) helps an organization to recover and resume business critical functions or normal operations when there are disruptions or disasters.
 
-In the hands on lab you will understand the nuances of how to setup an application to continue during a disaster and recovered on another site/cluster. We will use a real life e-retailer application for a fictitious company called Globex selling goods online. You will learn how to Deploy and setup this application for business continuity.
+In this hands on lab you will understand the nuances of how to setup an application to continue during a disaster and recovered on another site/cluster. We will use a real life e-retailer application for a fictitious company called Globex selling goods online. You will learn how to Deploy and setup this application for business continuity.
 Further, we will test the data persistency across failover/relocate(failback) scenarios by updating the data in the database. Verify that the data is consistent and available after transition from one site/cluster to another.
 Finally, we onboard a sample application to be part of Disaster Recovery strategy and test failover/relocate(failback).This time without any guided information to test your understanding.
 
