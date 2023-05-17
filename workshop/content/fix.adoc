@@ -33,7 +33,7 @@
 
 === Task Goal
 
-==== Now you know how the DR works and how you can achieve Business Continuity for your application.
+==== Now you know how the Regional DR works and how you can achieve Business Continuity using Regional DR for your application.
 Lets puts this learning to action now and configure a sample application for DR.
 Use the above steps to setup busybox applicaiton in a new namespace called busybox-test
 
