@@ -31,7 +31,7 @@
 === Failover Application To Secondary
 
 [arabic]
-. Open a terminal, login to the primary cluster link:{primary_openshift_api_server_url}[Primary Cluster OpenShift Console Login] with your credentials username: {primary_openshift_cluster_admin_username} and password: {primary_openshift_cluster_admin_password}.
+. Open a terminal, login to the primary cluster link:{primary_openshift_cluster_console_url}[Primary Cluster OpenShift Console Login] with your credentials username: {primary_openshift_cluster_admin_username} and password: {primary_openshift_cluster_admin_password}.
 +
 oc login -u {primary_openshift_cluster_admin_username} -p {primary_openshift_cluster_admin_password} {primary_openshift_api_server_url}
 +
