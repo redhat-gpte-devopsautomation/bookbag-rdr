@@ -140,7 +140,7 @@ image:images/secondary-globex-route.png[images/secondary-globex-route.png]
 +
 image:images/primary-globex-landing.png[images/primary-globex-landing.png]
 +
-. You can also get route from terminal window which you see on the right side of your instruction guide, login to the primary cluster api link:{primary_openshift_cluster_console_url}[Primary Cluster OpenShift Cluster API link] with your credentials username: {primary_openshift_cluster_admin_username} and password: {primary_openshift_cluster_admin_password}.
+. You can also get route from terminal window which you see on the right side of your instruction guide, login to the secondary cluster api link:{secondary_openshift_cluster_console_url}[Secondary Cluster OpenShift Cluster API link] with your credentials username: {secondary_openshift_cluster_admin_username} and password: {secondary_openshift_cluster_admin_password}.
 +
 [source,role="execute"]
 ----
@@ -160,7 +160,7 @@ globex-ui                     globex-ui-globex.apps.cluster-flxz7-2.sandbox2418.
   globex-ui                     http   edge/Redirect   None
 ----
 +
-. Select the last page (6) and notice that the price of the Quarkust T-shirt is *$15.00*.  Our data from the primary cluster has been preserved during the failover.
+. On the Coolstore Globex UI, select the last page (6) and notice that the price of the Quarkust T-shirt is *$15.00*.  Our data from the primary cluster has been preserved during the failover.
 +
 image:images/secondary-price-preserved.png[images/secondary-price-preserved.png]
 +
