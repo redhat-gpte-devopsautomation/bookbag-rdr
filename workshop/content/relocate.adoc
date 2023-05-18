@@ -34,14 +34,12 @@
 [arabic]
 . You will now attempt to relocate/failback the application to the primary cluster.  Before we do that, we want to ensure that any changes made on the secondary cluster are preserved when relocating back to the primary cluster. In the terminal session, login to the secondary cluster link:{secondary_openshift_api_server_url}[Secondary Cluster OpenShift API Link] with your credentials username: {secondary_openshift_cluster_admin_username} and password: {secondary_openshift_cluster_admin_password}.
 +
-oc login -u %secondary_openshift_cluster_admin_username% -p %secondary_openshift_cluster_admin_password% %secondary_openshift_api_server_url%
-+
-. You are again going to make an update to the price of the Quarkus T-shirt.  Update the price by running the below commands:
-+
 [source,role="execute"]
 ----
 oc login -u %secondary_openshift_cluster_admin_username% -p %secondary_openshift_cluster_admin_password% %secondary_openshift_api_server_url%
 ----
++
+. You are again going to make an update to the price of the Quarkus T-shirt.  Update the price by running the below commands:
 +
 [source,role="execute"]
 ----

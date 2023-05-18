@@ -158,6 +158,26 @@ image:images/primary-globex-route.png[images/primary-globex-route.png]
 +
 image:images/primary-globex-landing.png[images/primary-globex-landing.png]
 +
+. You can also get route from terminal window which you see on the right side of your instruction guide, login to the primary cluster api link:{primary_openshift_cluster_console_url}[Primary Cluster OpenShift Cluster API link] with your credentials username: {primary_openshift_cluster_admin_username} and password: {primary_openshift_cluster_admin_password}.
++
+[source,role="execute"]
+----
+oc login -u %primary_openshift_cluster_admin_username% -p %primary_openshift_cluster_admin_password% %primary_openshift_api_server_url%
+----
++
+. You are now going to get the route of globex-ui and copy the route for example *globex-ui-globex.apps.cluster-flxz7-2.sandbox2418.opentlc.com* and paste in a browser window to get the coolstore app UI. This is the same route you can see from previous step by login to OpenShift Console:
++
+[source,role="execute"]
+----
+oc get route -n globex | grep globex-ui
+----
++
+.Example output.
+----
+globex-ui                     globex-ui-globex.apps.cluster-flxz7-2.sandbox2418.opentlc.com
+  globex-ui                     http   edge/Redirect   None
+----
++
 . A list of store items will be presented to you.  Take note of the price of the first item *Quarkus T-shirt*.  Later you will change the price before you initiate a failover and ensure that the new price carries over to the secondary cluster.
 +
 image:images/primary-globex-items.png[images/primary-globex-items.png]
